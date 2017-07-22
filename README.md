@@ -84,7 +84,8 @@ membros da equipe que será por esse <a href="https://docs.google.com/spreadshee
 <p>Para entrar em alguma Branch execute <code>git checkout nomeDaBranch</code>.</p>
 <p>Para visualizar a lista das Branchs que o seu Git já conhece e a Branch que você esta atualmente execute: <code>git branch</code>.</p>
 <p>Para entrar em alguma Branch execute: <code>git checkout nomeDaBranch</code>.</p>
-<p>Para atualizar ou mesclar as mudanças da Branch atual com outra Branch execute: <code>git merge outraBranch</code>.(<i>Dica: Utilize esse comando para Atualizar a master com as suas funcionalidades implementadas ou a sua Branch com as funcionalidades já implementadas na master</i>)</p>
+<p>Para atualizar ou mesclar as mudanças da Branch atual com outra Branch execute: <code>git merge outraBranch</code>.(<i>Dica: Utilize esse comando para Atualizar somente a sua Branch com as funcionalidades já implementadas na master</i>)</p>
+<p>Para atualizar a master com as funcionalidades da sua Branch, abra um <strong>Pull Request no GitHub</strong>!!!</p>
 <h2>Regras de Etiqueta de Desenvolvimento:</h2>
 <ul>
 <li>Não edite nada na Branch que não pertence a você!</li>
@@ -93,4 +94,6 @@ membros da equipe que será por esse <a href="https://docs.google.com/spreadshee
 <li>Assine as Issues para informar a equipe que você está desenvolvendo aquela funcionalidade.</li>
 <li>Realize testes em sua Branch antes de atualizar a master com as suas funcionalidades.</li>
 <li>Antes de desenvolver uma nova funcionalidade ou corrigir algum bug, verifique se ela está citada em alguma Issue para referenciar a sua Branch. Caso não esteja, cria uma Issue da funcionalidade ou Bug que deseja implementar ou corrigir.</li>
+<li>Somente atualize a master através de requisições do Pull Request para a equipe acompanhar as implementações!!!</li>
+<li><strong>Não aceite o seu próprioPull Request!</strong> Comunique-se com a Equipe de Desenvolvimento antes!</li>
 </ul>
