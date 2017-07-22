@@ -1,13 +1,18 @@
 #include <stdio.h>
 #include <string.h>
 #define SIZE 100000
+#define PATH 128
 
 int main() {
 
   //Funçaõ para Ler algum Arquivo.
   int readFile(char output[]);
+  char FilePath[PATH];
 
-  readFile("MOCK_DATA.csv");
+  printf("Digite o nome do arquivo com o formato '.csv': ");
+  scanf("%s", FilePath);
+
+  readFile(FilePath);
   return 0;
 }
 
