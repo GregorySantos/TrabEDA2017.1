@@ -74,3 +74,23 @@ time quanto a dedicação do mesmo ao trabalho – 02/09</li>
 membros da equipe que será por esse <a href="https://docs.google.com/spreadsheets/d/1zjHTA3Gck3VxdcQmSr8T81m79orYCkj0gHwXnD1fUhA/edit?usp=sharing">Link</a></p>
 
 <p>O modelo do <a href="http://www.sbc.org.br/documentos-da-sbc/summary/169-templates-para-artigos-e-capitulos-de-livros/878-modelosparapublicaodeartigos">Artigo da SBC</a> a ser seguido.</p>
+
+<h2>Padrão para o Uso do GitHub</h2>
+
+<p>Para baixar o repositório na sua máquina execute: <code>git clone https://github.com/GregorySantos/TrabEDA2017.1</code></p>
+<p>Para criar uma Branch corretamente é preciso seguir alguns passos. Primeiro entre na Branch que tem a funcionalidade que você queria melhorar, <b>é recomendável sempre criar uma Branch a partir do master</b>(<i>Caso o master ainda não tenha as funcionalidades necessárias para a implementação que deseja realizar, solicite ao dono da Branch onde as funcionalidades já foram criadas para atualizar a master</i>), e execute <code>git checkout -b "nomeDaBranch#IdIssue"</code>. Um exemplo prático: <code>git checkout -b Menu#5</code>.</p>
+<p>Para atualizar o repositório no seu computador execute: <code>git pull origin nomeDaBranch</code></p>
+<p>Para enviar as suas alterações para o GitHub execute: <code>git push origin nomeDaBranch</code></p>
+<p>Para entrar em alguma Branch execute <code>git checkout nomeDaBranch</code>.</p>
+<ṕ>Para visualizar a lista das Branchs que o seu Git já conhece e a Branch que você esta atualmente execute: <code>git branch</code>.</p>
+<p>Para entrar em alguma Branch execute: <code>git checkout nomeDaBranch</code>.</p>
+<p>Para atualizar ou mesclar as mudanças da Branch atual com outra Branch execute: <code>git merge outraBranch</code>.(<i>Dica: Utilize esse comando para Atualizar a master com as suas funcionalidades implementadas ou a sua Branch com as funcionalidades já implementadas na master</i>)</p>
+<h2>Regras de Etiqueta de Desenvolvimento:</h2>
+<ul>
+<li>Não edite nada na Branch que não pertence a você!</li>
+<li>Não edite nada diretamente da Master!</li>
+<li>Revise seu código antes de atualizar a master com as suas funcionalidades!</li>
+<li>Assine as Issues para informar a equipe que você está desenvolvendo aquela funcionalidade.</li>
+<li>Realize testes em sua Branch antes de atualizar a master com as suas funcionalidades.</li>
+<li>Antes de desenvolver uma nova funcionalidade ou corrigir algum bug, verifique se ela está citada em alguma Issue para referenciar a sua Branch. Caso não esteja, cria uma Issue da funcionalidade ou Bug que deseja implementar ou corrigir.</li>
+</ul>
