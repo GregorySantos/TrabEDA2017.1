@@ -82,7 +82,7 @@ membros da equipe que será por esse <a href="https://docs.google.com/spreadshee
 <p>Para atualizar o repositório no seu computador execute: <code>git pull origin nomeDaBranch</code></p>
 <p>Para enviar as suas alterações para o GitHub execute: <code>git push origin nomeDaBranch</code></p>
 <p>Para entrar em alguma Branch execute <code>git checkout nomeDaBranch</code>.</p>
-<ṕ>Para visualizar a lista das Branchs que o seu Git já conhece e a Branch que você esta atualmente execute: <code>git branch</code>.</p>
+<p>Para visualizar a lista das Branchs que o seu Git já conhece e a Branch que você esta atualmente execute: <code>git branch</code>.</p>
 <p>Para entrar em alguma Branch execute: <code>git checkout nomeDaBranch</code>.</p>
 <p>Para atualizar ou mesclar as mudanças da Branch atual com outra Branch execute: <code>git merge outraBranch</code>.(<i>Dica: Utilize esse comando para Atualizar a master com as suas funcionalidades implementadas ou a sua Branch com as funcionalidades já implementadas na master</i>)</p>
 <h2>Regras de Etiqueta de Desenvolvimento:</h2>
