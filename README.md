@@ -4,6 +4,12 @@
 <h5>Dados do Trabalho</h5>
 <p><strong>Nota Máxima:</strong> 10.0</p>
 <p><strong>Peso da Média:</strong> 3</p>
+<h5>Membros</h5>
+<ul>
+<li>Gregory Santos - GregorySantos</li>
+<li>Lucas Natanael - LucasNBP</li>
+<li>Matheus Silva Freitas - FormigTeen</li>
+</ul>
 
 <h6>Descrição:</h6>
 
