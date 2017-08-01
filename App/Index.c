@@ -4,15 +4,19 @@
 #define SIZE 100000
 #define PATH 128
 
-typedef struct nodeList {
-    struct nodeList *back; //Armazenar o Anterior
-    struct nodeList *next; //Armazenar o Próxima
+typedef struct datanode{
     int matricula;  //Armazenar a Matricula
     char *nome; //Armazenar o Nome
     char *sobrenome; //Armazenar o Sobrenome
     char *email; //Armazenar o Email
     char *telefone; //Armazena o Telefone
     int salario; //Armazena o Salario
+}DataNode;
+
+typedef struct nodeList {
+    struct nodeList *back; //Armazenar o Anterior
+    struct nodeList *next; //Armazenar o Próxima
+    struct datanode *Data;
 }NodeList; //Cada Node da Lista
 
 typedef struct headList {
@@ -28,6 +32,7 @@ int main() {
   List * createList();
   //FUNÇÃO PARA DEBUG
   void debug();
+  void Insert(List * L, DataNode data)
 
   giveFile();
 
