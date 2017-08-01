@@ -1,23 +1,70 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #define SIZE 100000
 #define PATH 128
 
+typedef struct nodeList {
+    struct nodeList *back; //Armazenar o Anterior
+    struct nodeList *next; //Armazenar o Próxima
+    int matricula;  //Armazenar a Matricula
+    char *nome; //Armazenar o Nome
+    char *sobrenome; //Armazenar o Sobrenome
+    char *email; //Armazenar o Email
+    char *telefone; //Armazena o Telefone
+    int salario; //Armazena o Salario
+}NodeList; //Cada Node da Lista
+
+typedef struct headList {
+    struct nodeList *next; //Armazenar o Próxima
+    int size; //Aramazna o Tamanho da Lista
+}List;//Uma Lista
+
 int main() {
+
+  //Função que Pede ao Usuario o Nome do Arquivo e Depois o Lê
+  void giveFile();
+  //Cria, Inicializa e Retorna um Ponteiro para uma Lista
+  List * createList();
+  //FUNÇÃO PARA DEBUG
+  void debug();
+
+  giveFile();
+
+  debug();
+
+  return 0;
+}
+
+void debug() {
+
+  int readFile(char output[]);
+  void giveFile();
+  List * createList();
+
+  List * d = createList();
+  printf("O Tamanho é %d --DEBUG\n\n", (*d).size);
+
+}
+
+//Pede ao Usuario o Nome do Arquivo e Depois Lê
+void giveFile()
+{
 
   //Funçaõ para Ler algum Arquivo.
   int readFile(char output[]);
+
   char FilePath[PATH];
 
   printf("Digite o nome do arquivo com o formato '.csv': ");
   scanf("%s", FilePath);
 
   readFile(FilePath);
-  return 0;
 }
 
 //Lê o Arquivo para encaminhar as Linhas com os Dados para a Função de Criar Node
-int readFile(char output[]) {
+int readFile(char output[])
+{
 
   FILE *ptrFile;
   char Data[SIZE];
@@ -40,7 +87,8 @@ int readFile(char output[]) {
 }
 
 //Recebe a Linha e trata para enviar para algum Node os Dados
-void breakLine ( char lineInput[] ) {
+void breakLine ( char lineInput[] )
+{
 
   char *ptrData;
 
@@ -50,4 +98,18 @@ void breakLine ( char lineInput[] ) {
     printf("%s\n", ptrData);
     ptrData = strtok(NULL, ",");
   }
+}
+
+//Função que Aloca um Espaço para criar a Lista e Retorna o Ponteiro da Lista
+List * createList()
+{
+    List * temp = malloc(sizeof(List));
+
+    if ( temp != NULL) {
+      (*temp).size = 0;
+      (*temp).next = NULL;
+    }
+
+    return temp;
+
 }
