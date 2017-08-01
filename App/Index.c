@@ -113,3 +113,14 @@ List * createList()
     return temp;
 
 }
+
+//Função que Busca o Registro pela Matricula, e retorna o POnteiro desse Registro
+NodeList * buscaMatricula ( int inputMatricula, List * root ) {
+  NodeList * res = (*root).next;
+
+  while ( (*res).matricula != inputMatricula ) {
+    res = (*res).next;
+  }
+
+  return res;
+}
