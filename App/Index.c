@@ -16,7 +16,7 @@ typedef struct datanode{
 typedef struct nodeList {
     struct nodeList *back; //Armazenar o Anterior
     struct nodeList *next; //Armazenar o Próxima
-    struct datanode *Data;
+    struct datanode data;
 }NodeList; //Cada Node da Lista
 
 typedef struct headList {
@@ -32,7 +32,9 @@ int main() {
   List * createList();
   //FUNÇÃO PARA DEBUG
   void debug();
-  void Insert(List * L, DataNode data)
+  //Insere um nó de dados na lista
+  int Insert(List * L, DataNode d);
+  
 
   giveFile();
 
@@ -117,4 +119,44 @@ List * createList()
 
     return temp;
 
+}
+//Função para inserir um nó na lista, ordenado pela matrícula
+int Insert(List * L, DataNode d){
+    if(L == NULL) 
+        return 0;
+
+    NodeList *NewNode = (NodeList*) malloc(sizeof(NodeList));
+    if(NewNode == NULL){
+        printf("Memoria indisponivel. Nao eh possivel inserir.\n");
+        return 0;
+    }
+
+    NewNode->data = d;
+    L->size++;
+    if(L->next == NULL){ //lista vazia: insere início
+        NewNode->next = NULL;
+        NewNode->back = NULL;
+        L->next = NewNode;
+        return 1;
+    }
+    else{
+        NodeList *previous, *current = L->next;
+        while(current != NULL && current->data.matricula < d.matricula){ //busca onde inserir
+            previous = current;
+            current = current->next;
+        }
+        if(current == L->next){ //o elemento é o menor da lista, insere no início
+            NewNode->back = NULL;
+            L->next->back = NewNode;
+            NewNode->next = L->next;
+            L->next = NewNode;
+        }else{ // insere no meio ou final
+            NewNode->next = previous->next;
+            NewNode->back = previous;
+            previous->next = NewNode;
+            if(current != NULL)
+                current->back = NewNode;
+        }
+        return 1;
+    }
 }
