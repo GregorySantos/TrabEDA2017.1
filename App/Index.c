@@ -152,9 +152,9 @@ int Insert(List *L, NodeList *NewNode){
             if( atual->next != NULL)
                 (atual->next)->back = NewNode;
         }
-        L->size++;
-        return 1;
     }
+    L->size++;
+    return 1;
 }
 
 //Função que Busca o Registro pela Matricula, e retorna o POnteiro desse Registro... Caso não encontre, ele retorna o Ponteiro Anterior
