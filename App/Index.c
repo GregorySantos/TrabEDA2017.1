@@ -4,6 +4,8 @@
 #define SIZE 100000
 #define PATH 128
 
+//Estruturas Definidas
+
 typedef struct datanode{
     int matricula;  //Armazenar a Matricula
     char *nome; //Armazenar o Nome
@@ -12,56 +14,86 @@ typedef struct datanode{
     char *telefone; //Armazena o Telefone
     double salario; //Armazena o Salario
 }DataNode;
-
 typedef struct nodeList {
     struct nodeList *back; //Armazenar o Anterior
     struct nodeList *next; //Armazenar o Próxima
     struct datanode *data;
 }NodeList; //Cada Node da Lista
-
 typedef struct headList {
     struct nodeList *next; //Armazenar o Próxima
     int size; //Aramazna o Tamanho da Lista
 }List;//Uma Lista
 
+//Assinaturas de Funções
+void debug(); //Função para Debug
+void showMenu(int level); //Função para mostrar o Menu
+int readFile(char output[]); //Funçaõ para Ler algum Arquivo.
+void giveFile(); //Função que recebe do usuario o nome do Arquivo
+void breakLine ( char lineInput[] ); //Função que Trata cada Linha para Inserir em um Node
+
 int main() {
 
-  //Função que Pede ao Usuario o Nome do Arquivo e Depois o Lê
-  void giveFile();
-  //Cria, Inicializa e Retorna um Ponteiro para uma Lista
-  List * createList();
-  //FUNÇÃO PARA DEBUG
-  void debug();
-  //Insere um nó de dados na lista
-  int Insert(List * L, DataNode *d);
-  //cria um novo nó
-  NodeList * createNodeList(DataNode *d);
-  
-
-  giveFile();
-
-  debug();
-
-  return 0;
+    debug();
+    return 0;
 }
+
+//Funções Complementares
 
 void debug() {
 
-  int readFile(char output[]);
-  void giveFile();
-  List * createList();
-
-  List * d = createList();
-  printf("O Tamanho é %d --DEBUG\n\n", (*d).size);
-
+    showMenu(0);
+    mainExecute(validadeCommand(1, 4));
 }
+
+void mainExecute(int command) {
+    switch (command) {
+        case 1:
+            giveFile();
+            break;
+    }
+}
+//Fim das Funções Complementares
+//Funções de Menu
+
+//Função que Apresenta o Menu
+void showMenu(int level) {
+
+    switch ( level ) {
+        case 0:
+            printf("Lista de Opções: \n\n1 - Importar Arquivo CSV\n2 - Importar Dados\n3 - Editar Dados\n4 - Visualizar Dados\n5 - Sair");
+            break;
+        case 1:
+            printf("Qual Estrutura deseja utilizar? \n\n1 - Lista Duplamente Encadeada\n2 - Árvore AVL\n3 - Ambas\n4 - Voltar");
+            break;
+        case 2:
+            printf("Como deseja Editar?1 - Excluir\n2 - Atualizar\n3 - Voltar");
+            break;
+    }
+}
+
+//Função que Valida os Dados que Recebe do Menu
+int validadeCommand(int start, int end) {
+
+    int res;
+
+    printf("Digite o comando: ");
+    scanf("%d", &res);
+
+    while ( res < start || res > end ) {
+        printf("Comando não identificado! Por favor, digite novamente: ")
+        scanf("%d", &res);
+    }
+
+    return res;
+}
+
+//Fim das Funções de Menu
+
+//Funções Para Leitura de Arquivo
 
 //Pede ao Usuario o Nome do Arquivo e Depois Lê
 void giveFile()
 {
-
-  //Funçaõ para Ler algum Arquivo.
-  int readFile(char output[]);
 
   char FilePath[PATH];
 
@@ -77,10 +109,6 @@ int readFile(char output[])
 
   FILE *ptrFile;
   char Data[SIZE];
-
-  //Função que Trata cada Linha para Inserir em um Node
-  void breakLine ( char lineInput[] );
-
   if ( ( ptrFile = fopen(output, "r") ) == NULL ) {
     printf("Erro ao Ler o Arquivo!\n");
     return 0;
@@ -108,6 +136,9 @@ void breakLine ( char lineInput[] )
     ptrData = strtok(NULL, ",");
   }
 }
+//Fim das Funções de Leitura de Arquivo
+
+//Funções de Lista
 
 //Função que Aloca um Espaço para criar a Lista e Retorna o Ponteiro da Lista
 List * createList()
@@ -127,14 +158,14 @@ NodeList * createNodeList(DataNode *d){
     if(node != NULL){
         node->data = d;
         node->next = NULL;
-        node->back = NULL;   
+        node->back = NULL;
     }
     return node;
 }
 
 //Função para inserir um nó na lista, ordenado pela matrícula
 int Insert(List *L, NodeList *NewNode){
-    if(L == NULL) 
+    if(L == NULL)
         return 0;
 
     L->size++;
@@ -163,3 +194,5 @@ int Insert(List *L, NodeList *NewNode){
         return 1;
     }
 }
+
+//Fim das Funções de Lista
