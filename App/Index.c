@@ -36,6 +36,8 @@ int main() {
   int Insert(List * L, DataNode *d);
   //cria um novo nó
   NodeList * createNodeList(DataNode *d);
+  //remove um nó pela matrícula
+  int removeNode(List* L, int mat)
   
 
   giveFile();
@@ -162,4 +164,30 @@ int Insert(List *L, NodeList *NewNode){
         }
         return 1;
     }
+}
+
+int removeNode(List* L, int mat){
+    if(L == NULL) // nao existe a lista
+        return 0;
+    if(L->next == NULL) //lista vazia
+        return 0;
+
+    NodeList *node = L->next;
+    while(node != NULL && node->data->matricula != mat){ //busca o nó pra remover
+        node = node->next;
+    }
+    if(node == NULL) // valor nao encontrado
+        return 0;
+
+    if(node->back == NULL) // valor encontrado no primeiro nó
+        L->next = node->next;
+    else
+        node->back->next = node->next; // valor encontrado no meio ou final
+
+    if(node->next != NULL) // se o valor não é o último
+        node->next->back = node->back;
+
+    L->size--; //decrementa o tamanho da lista
+    free(node);
+    return 1;
 }
