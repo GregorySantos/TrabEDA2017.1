@@ -27,9 +27,11 @@ typedef struct headList {
 //Assinaturas de Funções
 void debug(); //Função para Debug
 void showMenu(int level); //Função para mostrar o Menu
-int readFile(char output[]); //Funçaõ para Ler algum Arquivo.
+int readFile(char output[], int choose); //Funçaõ para Ler algum Arquivo.
 void giveFile(); //Função que recebe do usuario o nome do Arquivo
 void breakLine ( char lineInput[] ); //Função que Trata cada Linha para Inserir em um Node
+void mainExecute(int command); //Execução dos Principais Comandos
+int validadeCommand(int start, int end); //Valida os Comandos Recebidos da Faixa [start, end]
 
 int main() {
 
@@ -45,6 +47,7 @@ void debug() {
     mainExecute(validadeCommand(1, 4));
 }
 
+//Execução dos Comandos Principais
 void mainExecute(int command) {
     switch (command) {
         case 1:
@@ -60,13 +63,13 @@ void showMenu(int level) {
 
     switch ( level ) {
         case 0:
-            printf("Lista de Opções: \n\n1 - Importar Arquivo CSV\n2 - Importar Dados\n3 - Editar Dados\n4 - Visualizar Dados\n5 - Sair");
+            printf("Lista de Opções: \n\n1 - Importar Arquivo CSV\n2 - Importar Dados\n3 - Editar Dados\n4 - Visualizar Dados\n5 - Sair\n\n");
             break;
         case 1:
-            printf("Qual Estrutura deseja utilizar? \n\n1 - Lista Duplamente Encadeada\n2 - Árvore AVL\n3 - Ambas\n4 - Voltar");
+            printf("Qual Estrutura deseja utilizar? \n\n1 - Lista Duplamente Encadeada\n2 - Árvore AVL\n3 - Ambas\n4 - Voltar\n\n");
             break;
         case 2:
-            printf("Como deseja Editar?1 - Excluir\n2 - Atualizar\n3 - Voltar");
+            printf("Como deseja Editar?1 - Excluir\n2 - Atualizar\n3 - Voltar\n\n");
             break;
     }
 }
@@ -80,7 +83,7 @@ int validadeCommand(int start, int end) {
     scanf("%d", &res);
 
     while ( res < start || res > end ) {
-        printf("Comando não identificado! Por favor, digite novamente: ")
+        printf("Comando não identificado! Por favor, digite novamente: ");
         scanf("%d", &res);
     }
 
@@ -95,16 +98,18 @@ int validadeCommand(int start, int end) {
 void giveFile()
 {
 
-  char FilePath[PATH];
+    char FilePath[PATH];
 
-  printf("Digite o nome do arquivo com o formato '.csv': ");
-  scanf("%s", FilePath);
-
-  readFile(FilePath);
+    printf("Digite o nome do arquivo com o formato '.csv': ");
+    scanf("%s", FilePath);
+    showMenu(1);//Pergunbta ao Usuario qual será a Estrutura a ser Afetada
+    int choose = validadeCommand(1, 4);
+    if ( choose != 4 )//Pula se o usuario cancelar
+        readFile(FilePath, choose);
 }
 
 //Lê o Arquivo para encaminhar as Linhas com os Dados para a Função de Criar Node
-int readFile(char output[])
+int readFile(char output[], int choose)
 {
 
   FILE *ptrFile;
@@ -116,6 +121,7 @@ int readFile(char output[])
     while ( !feof(ptrFile) ) {
       fgets(Data, SIZE, ptrFile);
       breakLine(Data);
+      //Implementar a Passada dos Nodes Datas Criado para Nodes Especificos para cada Estrutura
       //Bug: Na última Interação o BreakLine imprime o número 1000, não sei se ficará assim quando os dados forem inseridos diretamente no TAD.
     }
     fclose(ptrFile);
@@ -123,18 +129,18 @@ int readFile(char output[])
   }
 }
 
-//Recebe a Linha e trata para enviar para algum Node os Dados
+//Recebe a Linha e trata para enviar para algum Node os Dados ( Implementar a Criação da Data )
 void breakLine ( char lineInput[] )
 {
 
-  char *ptrData;
+    char *ptrData;
 
-  ptrData = strtok(lineInput, ",");
-  while ( ptrData ) {
-    //Implementar a Criação de Node
-    printf("%s\n", ptrData);
-    ptrData = strtok(NULL, ",");
-  }
+    ptrData = strtok(lineInput, ",");
+    while ( ptrData ) {
+        //Implementar a Criação de Data
+        printf("%s\n", ptrData);
+        ptrData = strtok(NULL, ",");
+    }
 }
 //Fim das Funções de Leitura de Arquivo
 
