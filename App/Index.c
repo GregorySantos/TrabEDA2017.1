@@ -4,40 +4,71 @@
 #define SIZE 100000
 #define PATH 128
 
+//estrutura para os dados
 typedef struct datanode{
-    int matricula;  //Armazenar a Matricula
-    char *nome; //Armazenar o Nome
-    char *sobrenome; //Armazenar o Sobrenome
-    char *email; //Armazenar o Email
-    char *telefone; //Armazena o Telefone
-    double salario; //Armazena o Salario
-}DataNode;
+	int matricula; //inteiro para a matricula
+	char *nome; //ponteiro de char para o nome
+	char *sobreNome; //ponteiro de char para o sobre nome
+	char *email; //ponteiro de char para o email
+	char *telefone; //ponteiro de char para o telefone(por causa do separador -)
+	double salario; //double para receber o salario com centavos
+}*DataNodePtr;
 
+//estrutura de lista
 typedef struct nodeList {
     struct nodeList *back; //Armazenar o Anterior
-    struct nodeList *next; //Armazenar o PrÃ³xima
+    struct nodeList *next; //Armazenar o Próxima
     struct datanode *data;
 }NodeList; //Cada Node da Lista
 
+//cabeça da lista
 typedef struct headList {
-    struct nodeList *next; //Armazenar o PrÃ³xima
+    struct nodeList *next; //Armazenar o Próxima
     int size; //Aramazna o Tamanho da Lista
 }List;//Uma Lista
 
+//estrutura de arvore que recebera os dados;
+typedef struct ArvNo{
+	DataNodePtr dados;
+	struct ArvNo *esqPtr; //ponteioro para o filho a esquerda (menor) da raiz
+	struct ArvNo *dirPtr; //ponteiro para o filho a direita (maior) da raiz
+	int altura; //inteiro para informar a altura do no
+}*ArvNoPtr; //definindo o tipo como um ponteiro, assim, posso inicia-lo sem precisar do '*'
+
+//bloco para os cabecalhos das funoes:
+//genericas:
+void debug();
+void giveFile();
+int readFile(char output[]);
+void breakLine ( char lineInput[] );
+//para lista:
+List * createList();
+NodeList * createNodeList(DataNode *d);
+int Insert(List *L, NodeList *NewNode);
+//para arvore:
+void inicializarDados(DataNodePtr *dados);
+void inicializarNO(ArvNoPtr *atual);
+int maximo(int i, int j);
+int pegarAltura(ArvNoPtr atual);
+ArvNoPtr criarNo(DataNodePtr dados);
+int fatorBalanceamento(ArvNoPtr raiz);
+ArvNoPtr rotacaoDir(ArvNoPtr raiz);
+ArvNoPtr rotacaoEsq(ArvNoPtr raiz);
+
+
 int main() {
 
-  //FunÃ§Ã£o que Pede ao Usuario o Nome do Arquivo e Depois o LÃª
+  //Função que Pede ao Usuario o Nome do Arquivo e Depois o Lê
   void giveFile();
   //Cria, Inicializa e Retorna um Ponteiro para uma Lista
   List * createList();
-  //FUNÃ‡ÃƒO PARA DEBUG
+  //FUNÇÃO PARA DEBUG
   void debug();
-  //Insere um nÃ³ de dados na lista
+  //Insere um nó de dados na lista
   int Insert(List * L, DataNode *d);
-  //cria um novo nÃ³
+  //cria um novo nó
   NodeList * createNodeList(DataNode *d);
-  
-
+  	
   giveFile();
 
   debug();
@@ -45,6 +76,7 @@ int main() {
   return 0;
 }
 
+//FUNCOES DE LISTA//////////////////////////////////////////////////////////////////////////////////////////////////////
 void debug() {
 
   int readFile(char output[]);
@@ -52,15 +84,15 @@ void debug() {
   List * createList();
 
   List * d = createList();
-  printf("O Tamanho Ã© %d --DEBUG\n\n", (*d).size);
+  printf("O Tamanho é %d --DEBUG\n\n", (*d).size);
 
 }
 
-//Pede ao Usuario o Nome do Arquivo e Depois LÃª
+//Pede ao Usuario o Nome do Arquivo e Depois Lê
 void giveFile()
 {
 
-  //FunÃ§aÃµ para Ler algum Arquivo.
+  //Funçaõ para Ler algum Arquivo.
   int readFile(char output[]);
 
   char FilePath[PATH];
@@ -71,14 +103,14 @@ void giveFile()
   readFile(FilePath);
 }
 
-//LÃª o Arquivo para encaminhar as Linhas com os Dados para a FunÃ§Ã£o de Criar Node
+//Lê o Arquivo para encaminhar as Linhas com os Dados para a Função de Criar Node
 int readFile(char output[])
 {
 
   FILE *ptrFile;
   char Data[SIZE];
 
-  //FunÃ§Ã£o que Trata cada Linha para Inserir em um Node
+  //Função que Trata cada Linha para Inserir em um Node
   void breakLine ( char lineInput[] );
 
   if ( ( ptrFile = fopen(output, "r") ) == NULL ) {
@@ -88,7 +120,7 @@ int readFile(char output[])
     while ( !feof(ptrFile) ) {
       fgets(Data, SIZE, ptrFile);
       breakLine(Data);
-      //Bug: Na Ãºltima InteraÃ§Ã£o o BreakLine imprime o nÃºmero 1000, nÃ£o sei se ficarÃ¡ assim quando os dados forem inseridos diretamente no TAD.
+      //Bug: Na última Interação o BreakLine imprime o número 1000, não sei se ficará assim quando os dados forem inseridos diretamente no TAD.
     }
     fclose(ptrFile);
     return 1;
@@ -103,13 +135,13 @@ void breakLine ( char lineInput[] )
 
   ptrData = strtok(lineInput, ",");
   while ( ptrData ) {
-    //Implementar a CriaÃ§Ã£o de Node
+    //Implementar a Criação de Node
     printf("%s\n", ptrData);
     ptrData = strtok(NULL, ",");
   }
 }
 
-//FunÃ§Ã£o que Aloca um EspaÃ§o para criar a Lista e Retorna o Ponteiro da Lista
+//Função que Aloca um Espaço para criar a Lista e Retorna o Ponteiro da Lista
 List * createList()
 {
     List * temp = malloc(sizeof(List));
@@ -122,7 +154,7 @@ List * createList()
     return temp;
 
 }
-NodeList * createNodeList(DataNode *d){
+NodeList * createNodeList(DataNode d){
     NodeList *node = (NodeList*) malloc(sizeof(NodeList));
     if(node != NULL){
         node->data = d;
@@ -132,13 +164,13 @@ NodeList * createNodeList(DataNode *d){
     return node;
 }
 
-//FunÃ§Ã£o para inserir um nÃ³ na lista, ordenado pela matrÃ­cula
+//Função para inserir um nó na lista, ordenado pela matrícula
 int Insert(List *L, NodeList *NewNode){
     if(L == NULL) 
         return 0;
 
     L->size++;
-    if(L->next == NULL){ //lista vazia: insere inÃ­cio
+    if(L->next == NULL){ //lista vazia: insere início
         L->next = NewNode;
         return 1;
     }
@@ -148,7 +180,7 @@ int Insert(List *L, NodeList *NewNode){
             previous = current;
             current = current->next;
         }
-        if(current == L->next){ //o elemento Ã© o menor da lista, insere no inÃ­cio
+        if(current == L->next){ //o elemento é o menor da lista, insere no início
             NewNode->back = NULL;
             L->next->back = NewNode;
             NewNode->next = L->next;
@@ -162,4 +194,94 @@ int Insert(List *L, NodeList *NewNode){
         }
         return 1;
     }
+}
+
+
+//FUNCOES DE ARVORE//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//funcao para alocar espaco numa estrutura dos dados
+void inicializarDados(DataNodePtr *dados){
+	(*dados)=(struct datanode *)malloc(sizeof(struct datanode));
+}
+
+//funcao para alocar espaco numa estrutura de no
+void inicializarNO(ArvNoPtr *atual){
+	(*atual)=(struct ArvNo *)malloc(sizeof(struct ArvNo));
+	inicializarDados(&(*atual)->dados);
+}
+
+//funcao para pegar o maior valor entre dois inteiros
+int maximo(int i, int j){
+    return (i > j)? i : j;
+}
+
+//funcao que retorna a altura de um no
+int pegarAltura(ArvNoPtr atual){
+	if(atual==NULL){
+		return 0;
+	}else{
+		return atual->altura;
+	}
+}
+
+//funcao para criar um novo NO (geralmente raiz)
+ArvNoPtr criarNo(DataNodePtr dados){
+	ArvNoPtr criado;		//cria e aloca espaco numa estrutura ArvNoPtr
+	inicializarNO(&criado);
+	
+	//copia todos os dados para o NO criado
+	//funcao strcpy copia os dados de um vetor de char para outro, necessita biblioteca string.h
+	(criado->dados)->matricula=dados->matricula;
+	/*strcpy((criado->dados)->nome, dados->nome);
+	strcpy((criado->dados)->sobreNome, dados->sobreNome);
+	strcpy((criado->dados)->email, dados->email);
+	strcpy((criado->dados)->telefone, dados->telefone);
+	(criado->dados)->salario=dados->salario;*/
+	criado->altura=1;
+	criado->esqPtr=NULL;
+	criado->dirPtr=NULL;
+	return (criado);		//retorna o NO criado
+}
+
+//funcao para obter o fator de balanceamento do no
+int fatorBalanceamento(ArvNoPtr raiz){
+	if(raiz==NULL){
+		return 0;
+	}else{
+		return (pegarAltura(raiz->esqPtr) - pegarAltura(raiz->dirPtr));		//ira retornar a altura da esquerda subtraindo a altura da direita
+	}
+}
+
+//funcao para rotacionar arvore para a direita
+ArvNoPtr rotacaoDir(ArvNoPtr raiz){
+	ArvNoPtr auxEsq, auxDir;		//dois auxiliares
+	auxEsq=raiz->esqPtr;		//este recebe a esquerda do NO raiz
+	auxDir=auxEsq->dirPtr;		//este recebe a direita da esquerda do NO raiz (pode ser NULL ou nao)
+	
+	//faz a rotacao
+	auxEsq->dirPtr=raiz;		//sobe a esquerda da raiz para ser a nova raiz, colocando a antiga raiz na direita
+	raiz->esqPtr=auxDir;		//coloca o que estava a direita da nova raiz na esquerda da antiga raiz, para nao perder dados
+	
+	//atualizar a altura dos nos que tiveram modificoes nos filhos (nos que nao tiveram filhos alterador nao precisam atualizar)
+	raiz->altura=1+maximo(pegarAltura(raiz->esqPtr), pegarAltura(raiz->dirPtr));
+	auxEsq->altura=1+maximo(pegarAltura(auxEsq->esqPtr), pegarAltura(auxEsq->dirPtr));
+	
+	return auxEsq;		//retorna a nova raiz;
+}
+
+//funcao para rotacionar arvore para a esquerda
+ArvNoPtr rotacaoEsq(ArvNoPtr raiz){
+	ArvNoPtr auxDir, auxEsq;		//dois auxiliares
+	auxDir=raiz->dirPtr;		//este recebe a direita do NO raiz
+	auxEsq=auxDir->esqPtr;		//este recebe a esquerda da direita do NO raiz (pode ser NULL ou nao)
+
+	//faz a rotacao
+	auxDir->esqPtr=raiz;		//sobe a direita da raiz para ser a nova raiz, colocando a antiga raiz na esquerda
+	raiz->dirPtr=auxEsq;		//coloca o que estava na esquerda da nova raiz na direita da antiga raiz, para nao perder dados
+
+	//atualizar a altura dos nos que tiveram modificoes nos filhos (nos que nao tiveram filhos alterador nao precisam atualizar)
+	raiz->altura=1+maximo(pegarAltura(raiz->esqPtr), pegarAltura(raiz->dirPtr));
+	auxDir->altura=1+maximo(pegarAltura(auxDir->esqPtr), pegarAltura(auxDir->dirPtr));
+
+	return auxDir;		//retorna a nova raiz;
 }
