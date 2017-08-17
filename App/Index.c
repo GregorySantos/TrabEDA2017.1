@@ -138,9 +138,7 @@ int Insert(List *L, NodeList *NewNode){
     if ( atual == NULL ) {
         if ( L == NULL )
             return 0;
-        L->size++;
         L->next = NewNode;
-        return 1;
     } else {
         if ( atual == L->next) { //o elemento é o menor da lista, insere no início
             NewNode->back = NULL;
@@ -154,6 +152,7 @@ int Insert(List *L, NodeList *NewNode){
             if( atual->next != NULL)
                 (atual->next)->back = NewNode;
         }
+        L->size++;
         return 1;
     }
 }
