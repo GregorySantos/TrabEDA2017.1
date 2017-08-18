@@ -14,11 +14,13 @@ typedef struct datanode{
     char *telefone; //Armazena o Telefone
     double salario; //Armazena o Salario
 }DataNode;
+
 typedef struct nodeList {
     struct nodeList *back; //Armazenar o Anterior
     struct nodeList *next; //Armazenar o Próxima
     struct datanode *data;
 }NodeList; //Cada Node da Lista
+
 typedef struct headList {
     struct nodeList *next; //Armazenar o Próxima
     int size; //Aramazna o Tamanho da Lista
