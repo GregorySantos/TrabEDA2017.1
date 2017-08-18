@@ -26,7 +26,7 @@ typedef struct headList {
 
 //Assinaturas de Funções
 
-void mainExecute(int command); //Execução dos Principais Comandos
+int mainExecute(int command); //Execução dos Principais Comandos
 int validadeCommand(int start, int end); //Valida os Comandos Recebidos da Faixa [start, end]
 void breakLine ( char lineInput[] ); //Função que Trata cada Linha para Inserir em um Node
 void giveFile(); //Função que recebe do usuario o nome do Arquivo
@@ -50,16 +50,33 @@ int main() {
 
 void debug() {
 
-    showMenu(0);
-    mainExecute(validadeCommand(1, 4));
+    do {
+        showMenu(0);
+    }while ( mainExecute(validadeCommand(1, 4)) );
 }
 
 //Execução dos Comandos Principais
-void mainExecute(int command) {
+int mainExecute(int command) {
     switch (command) {
         case 1:
             giveFile();
-            break;
+            return 1;
+        case 2:
+            //Função para Criar NodeData
+            //FunçãO para Ligar o NodeData a algum Nó de alguma Tad que o Usuario escolher
+            return 1;
+        case 3:
+            showMenu(1);
+            validadeCommand(1, 4);//Escolhe qual Estrutura irá editar
+            //Função que Recebe qual estrutura irá editar como parâmetro, e pergunta se deseja Editar ou Excluir os Dados
+            return 1;
+        case 4:
+            showMenu(1);
+            validadeCommand(1, 4);//Função que recebe qual a Estrutura irá ser visualizada
+            //Função que Recebe qual Tad será visualizado, quantos serão visualizados e exibe na tela
+            return 1;
+        case 5:
+            return 0;
     }
 }
 //Fim das Funções Complementares
