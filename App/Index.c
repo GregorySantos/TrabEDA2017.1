@@ -24,19 +24,16 @@ typedef struct headList {
     int size; //Aramazna o Tamanho da Lista
 }List;//Uma Lista
 
-int main() {
+//Assinaturas de Funções
 
-  //Função que Pede ao Usuario o Nome do Arquivo e Depois o Lê
-  void giveFile();
-  //Cria, Inicializa e Retorna um Ponteiro para uma Lista
-  List * createList();
-  //FUNÇÃO PARA DEBUG
-  void debug();
-  //Insere um nó de dados na lista
-  int Insert(List * L, DataNode *d);
-  //cria um novo nó
-  NodeList * createNodeList(DataNode *d);
-  
+NodeList * buscaMatricula ( int inputMatricula, List * root );//Função para Busca por Matricula em Lista
+void giveFile(); //Função que Pede ao Usuario o Nome do Arquivo e Depois o Lê
+List * createList();//Cria, Inicializa e Retorna um Ponteiro para uma Lista
+void debug();//FUNÇÃO PARA DEBUG
+int Insert(List *L, NodeList *NewNode); //Insere um nó de dados na lista
+NodeList * createNodeList(DataNode *d);//cria um novo nó
+
+int main() {
 
   giveFile();
 
@@ -122,44 +119,58 @@ List * createList()
     return temp;
 
 }
+
 NodeList * createNodeList(DataNode *d){
     NodeList *node = (NodeList*) malloc(sizeof(NodeList));
     if(node != NULL){
         node->data = d;
         node->next = NULL;
-        node->back = NULL;   
+        node->back = NULL;
     }
     return node;
 }
 
 //Função para inserir um nó na lista, ordenado pela matrícula
 int Insert(List *L, NodeList *NewNode){
-    if(L == NULL) 
-        return 0;
 
-    L->size++;
-    if(L->next == NULL){ //lista vazia: insere início
+    NodeList *atual = buscaMatricula(NewNode->data->matricula, L);
+
+    if ( atual == NULL ) {
+        if ( L == NULL )
+            return 0;
         L->next = NewNode;
-        return 1;
-    }
-    else{
-        NodeList *previous, *current = L->next;
-        while(current != NULL && current->data->matricula < NewNode->data->matricula){ //busca onde inserir
-            previous = current;
-            current = current->next;
-        }
-        if(current == L->next){ //o elemento é o menor da lista, insere no início
+    } else {
+        if ( atual == L->next) { //o elemento é o menor da lista, insere no início
             NewNode->back = NULL;
             L->next->back = NewNode;
             NewNode->next = L->next;
             L->next = NewNode;
-        }else{ // insere no meio ou final
-            NewNode->next = previous->next;
-            NewNode->back = previous;
-            previous->next = NewNode;
-            if(current != NULL)
-                current->back = NewNode;
+        } else { // insere no meio ou final
+            NewNode->next = atual->next;
+            NewNode->back = atual;
+            atual->next = NewNode;
+            if( atual->next != NULL)
+                (atual->next)->back = NewNode;
         }
-        return 1;
     }
+    L->size++;
+    return 1;
+}
+
+//Função que Busca o Registro pela Matricula, e retorna o POnteiro desse Registro... Caso não encontre, ele retorna o Ponteiro Anterior
+NodeList * buscaMatricula ( int inputMatricula, List * root ) {
+
+    if ( root == NULL || (*root).next == NULL )
+        return NULL;
+
+    NodeList * res = (*root).next;
+
+    while ( res->data->matricula != inputMatricula && res->data->matricula < inputMatricula && (*res).next != NULL ) {
+        res = (*res).next;
+    }
+
+    if ( res->data->matricula == inputMatricula || (*res).next == NULL )
+        return res;
+    else
+        return (*res).back;
 }
