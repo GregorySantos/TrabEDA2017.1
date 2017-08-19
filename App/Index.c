@@ -40,7 +40,6 @@ NodeList * createNodeList(DataNode *d);//cria um novo nó
 int removeNode(List* L, int mat);//remove um nó pela matrícula
 NodeList * buscaMatricula ( int inputMatricula, List * root );//Função para Busca por Matricula em Lista
 void setFileData( char * input, DataNode * new, int data );//Vai setando o DataNode
-void imprime(List *L); //só pra testes
 int InsertList(List *L, NodeList *NewNode); //Função para inserir um nó na lista, ordenado pela matrícula
 void * Create(int type); //Cria alguma estrutura de Dado e retorna o seu ponteiro
 void Insert(void * Head, void * Node, int type ); //Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
@@ -143,10 +142,10 @@ void giveFile()
 int readFile(char output[], int choose)
 {
 	DataNode *d;
-	// ponteiro pra árvore aqui. Não estou gostando da idéia de declarar um ponteiro mesmo que não vá usar
     FILE *ptrFile;
     char Data[SIZE];
     List *rootList;
+    //ponteiro para árvore aqui
 
     switch (choose) {
         case 1:
@@ -185,7 +184,6 @@ int readFile(char output[], int choose)
         }
 
         fclose(ptrFile);
-        imprime(rootList);
         return 1;
     }
 }
@@ -250,17 +248,6 @@ void setFileData( char * input, DataNode * new, int data ) {
     }
 }
 
-//só para testes
-void imprime(List *L){
-    NodeList *ptr = L->next;
-    if(ptr == NULL) printf("Lista Vazia!\n\n");
-
-    while(ptr != NULL){
-        printf("%d\n", ptr->data->matricula);
-        ptr = ptr->next;
-    }
-    printf("%d", L->size);
-}
 //Fim das Funções de Leitura de Arquivo
 
 //Funções de Lista
