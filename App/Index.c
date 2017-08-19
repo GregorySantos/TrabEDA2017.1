@@ -6,7 +6,6 @@
 
 //Estruturas Definidas
 
-//estrutura para os dados
 typedef struct datanode{
     int matricula; //inteiro para a matricula
 	char *nome; //ponteiro de char para o nome
@@ -21,13 +20,13 @@ typedef DataNode *DataNodePtr; //declarando a estrutura de dados como ponteiro
 //estrutura de lista
 typedef struct nodeList {
     struct nodeList *back; //Armazenar o Anterior
-    struct nodeList *next; //Armazenar o Próxima
+    struct nodeList *next; //Armazenar o Prï¿½xima
     struct datanode *data;
 }NodeList; //Cada Node da Lista
 
-//cabeça da lista
+//cabeï¿½a da lista
 typedef struct headList {
-    struct nodeList *next; //Armazenar o Próxima
+    struct nodeList *next; //Armazenar o Prï¿½xima
     int size; //Aramazna o Tamanho da Lista
 }List;//Uma Lista
 
@@ -39,10 +38,10 @@ typedef struct ArvNo{
 	int altura; //inteiro para informar a altura do no
 }*ArvNoPtr; //definindo o tipo como um ponteiro, assim, posso inicia-lo sem precisar do '*'
 
-//Assinaturas de Funções
+//Assinaturas de Funï¿½ï¿½es
 
-//genericas:
-int mainExecute(int command); //Execução dos Principais Comandos
+//Genericas:
+int mainExecute(int command); //Execuï¿½ï¿½o dos Principais Comandos
 int validadeCommand(int start, int end); //Valida os Comandos Recebidos da Faixa [start, end]
 void debug(); //FUNÃ‡ÃƒO PARA DEBUG
 void giveFile(); //FunÃ§Ã£o que recebe do usuario o nome do Arquivo
@@ -56,7 +55,7 @@ int removeNode(List* L, int mat);//remove um nÃ³ pela matrÃ­cula
 NodeList * buscaMatricula ( int inputMatricula, List * root );//FunÃ§Ã£o para Busca por Matricula em Lista
 int Insert(List *L, NodeList *NewNode); //Insere um nÃ³ de dados na lista
 void setFileData( char * input, DataNode * new, int data );//Vai setando o DataNode
-//arvore:
+//Arvore:
 void inicializarDados(DataNodePtr *dados);
 void inicializarNO(ArvNoPtr *atual);
 int maximo(int i, int j);
@@ -67,12 +66,12 @@ ArvNoPtr rotacaoDir(ArvNoPtr raiz);
 ArvNoPtr rotacaoEsq(ArvNoPtr raiz);
 
 int main(){
-	
+
 	debug();
 	return 0;
 }
 
-//Funções Complementares
+//Funï¿½ï¿½es Complementares
 
 void debug() {
 
@@ -81,7 +80,7 @@ void debug() {
     }while ( mainExecute(validadeCommand(1, 5)) );
 }
 
-//Execução dos Comandos Principais
+//ExecuÃ§Ã£o dos Comandos Principais
 int mainExecute(int command) {
     switch (command) {
         case 1:
@@ -145,7 +144,7 @@ int validadeCommand(int start, int end) {
 
 //FunÃ§Ãµes Para Leitura de Arquivo
 
-//Pede ao Usuario o Nome do Arquivo e Depois Lê
+//Pede ao Usuario o Nome do Arquivo e Depois LÃª
 void giveFile()
 {
 
@@ -376,25 +375,25 @@ int pegarAltura(ArvNoPtr atual){
 ArvNoPtr criarNo(DataNodePtr dados){
 	ArvNoPtr criado;		//cria e aloca espaco numa estrutura ArvNoPtr
 	inicializarNO(&criado);
-	
+
 	//copia todos os dados para o NO criado
 	//funcao strcpy copia os dados de um vetor de char para outro, necessita biblioteca string.h
 	(criado->dados)->matricula=dados->matricula;
-	
+
 	(criado->dados)->nome=malloc(sizeof(dados->nome));
 	strcpy((criado->dados)->nome, dados->nome);
-	
+
 	(criado->dados)->sobrenome=malloc(sizeof(dados->sobrenome));
 	strcpy((criado->dados)->sobrenome, dados->sobrenome);
-	
+
 	(criado->dados)->email=malloc(sizeof(dados->email));
 	strcpy((criado->dados)->email, dados->email);
-	
+
 	(criado->dados)->telefone=malloc(sizeof(dados->telefone));
 	strcpy((criado->dados)->telefone, dados->telefone);
-	
+
 	(criado->dados)->salario=dados->salario;
-	
+
 	criado->altura=1;
 	criado->esqPtr=NULL;
 	criado->dirPtr=NULL;
@@ -415,15 +414,15 @@ ArvNoPtr rotacaoDir(ArvNoPtr raiz){
 	ArvNoPtr auxEsq, auxDir;		//dois auxiliares
 	auxEsq=raiz->esqPtr;		//este recebe a esquerda do NO raiz
 	auxDir=auxEsq->dirPtr;		//este recebe a direita da esquerda do NO raiz (pode ser NULL ou nao)
-	
+
 	//faz a rotacao
 	auxEsq->dirPtr=raiz;		//sobe a esquerda da raiz para ser a nova raiz, colocando a antiga raiz na direita
 	raiz->esqPtr=auxDir;		//coloca o que estava a direita da nova raiz na esquerda da antiga raiz, para nao perder dados
-	
+
 	//atualizar a altura dos nos que tiveram modificoes nos filhos (nos que nao tiveram filhos alterador nao precisam atualizar)
 	raiz->altura=1+maximo(pegarAltura(raiz->esqPtr), pegarAltura(raiz->dirPtr));
 	auxEsq->altura=1+maximo(pegarAltura(auxEsq->esqPtr), pegarAltura(auxEsq->dirPtr));
-	
+
 	return auxEsq;		//retorna a nova raiz;
 }
 
@@ -442,4 +441,5 @@ ArvNoPtr rotacaoEsq(ArvNoPtr raiz){
 	auxDir->altura=1+maximo(pegarAltura(auxDir->esqPtr), pegarAltura(auxDir->dirPtr));
 
 	return auxDir;		//retorna a nova raiz;
+
 }
