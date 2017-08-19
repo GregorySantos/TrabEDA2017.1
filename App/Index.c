@@ -41,6 +41,8 @@ int removeNode(List* L, int mat);//remove um nó pela matrícula
 NodeList * buscaMatricula ( int inputMatricula, List * root );//Função para Busca por Matricula em Lista
 int Insert(List *L, NodeList *NewNode); //Insere um nó de dados na lista
 void setFileData( char * input, DataNode * new, int data );//Vai setando o DataNode
+int InsertData(List *root, DataNode *d );
+void imprime(List *L); //só pra testes
 
 int main() {
 
@@ -139,7 +141,9 @@ void giveFile()
 //Lê o Arquivo para encaminhar as Linhas com os Dados para a Função de Criar Node
 int readFile(char output[], int choose)
 {
-
+	DataNode *d;
+	List *root;
+	// ponteiro pra árvore aqui. Não estou gostando da idéia de declarar um ponteiro mesmo que não vá usar
     FILE *ptrFile;
     char Data[SIZE];
     if ( ( ptrFile = fopen(output, "r") ) == NULL ) {
@@ -148,13 +152,19 @@ int readFile(char output[], int choose)
     } else {
         fgets(Data, SIZE, ptrFile);//Pula a primeira Linha
         fgets(Data, SIZE, ptrFile);//Pula a segunda Linha
+        if(choose == 1)
+        	root = createList();
+        // aqui vem a opção de criar árvore
         while ( !feof(ptrFile) ) {
             fgets(Data, SIZE, ptrFile);
-            breakLine(Data);
+            d = breakLine(Data);
+            InsertDataList(root, d);
+            //inserir a opção da árvore e de ambas as TADs
             //Implementar a Passada dos Nodes Datas Criado para Nodes Especificos para cada Estrutura
             //Bug: Na última Interação o BreakLine imprime o número 1000, não sei se ficará assim quando os dados forem inseridos diretamente no TAD.
         }
         fclose(ptrFile);
+        imprime(root);
         return 1;
     }
 }
@@ -217,6 +227,24 @@ void setFileData( char * input, DataNode * new, int data ) {
             (*new).salario = atof(input);
             break;
     }
+}
+
+// Insere dados num nó e insere nó na lista
+void InsertDataList(List* root, DataNode *d ){ //
+		NodeList *node = createNodeList(d);
+		Insert(root, node);
+}
+
+//só para testes
+void imprime(List *L){
+    NodeList *ptr = L->next;
+    if(ptr == NULL) printf("Lista Vazia!\n\n");
+ 
+    while(ptr != NULL){
+        printf("%d\n", ptr->data->matricula);
+        ptr = ptr->next;
+    }
+    printf("%d", L->size);
 }
 //Fim das Funções de Leitura de Arquivo
 
