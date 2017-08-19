@@ -357,6 +357,7 @@ void FreeNode(NodeList *node){
 	free(node->data->email);
 	free(node->data->telefone);
 	free(node->data);
+    free(node);
 }
 
 //Fim das Funções de Lista
