@@ -36,8 +36,8 @@ int readFile(char output[], int choose); //Funçaõ para Ler algum Arquivo.
 void showMenu(int level); //Função para mostrar o Menu
 List * createList(); //Cria, Inicializa e Retorna um Ponteiro para uma Lista
 void debug(); //FUNÇÃO PARA DEBUG
-NodeList * createNodeList(DataNode *d); //cria um novo nó
-int removeNode(List* L, int mat); //remove um nó pela matrícula
+NodeList * createNodeList(DataNode *d);//cria um novo nó
+int removeNode(List* L, int mat);//remove um nó pela matrícula
 NodeList * buscaMatricula ( int inputMatricula, List * root );//Função para Busca por Matricula em Lista
 int Insert(List *L, NodeList *NewNode); //Insere um nó de dados na lista
 void setFileData( char * input, DataNode * new, int data );//Vai setando o DataNode
@@ -85,6 +85,7 @@ int mainExecute(int command) {
 //Fim das Funções Complementares
 
 //Funções de Menu
+
 //Função que Apresenta o Menu
 void showMenu(int level) {
 
@@ -178,8 +179,10 @@ DataNode * breakLine ( char lineInput[] )
     }
 
     return container;
-
 }
+//Fim das Funções de Leitura de Arquivo
+
+//Funções de Lista
 
 //Vai setando o DataNode
 void setFileData( char * input, DataNode * new, int data ) {
