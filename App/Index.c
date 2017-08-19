@@ -34,10 +34,11 @@ void breakLine ( char lineInput[] ); //Função que Trata cada Linha para Inseri
 void giveFile(); //Função que recebe do usuario o nome do Arquivo
 int readFile(char output[], int choose); //Funçaõ para Ler algum Arquivo.
 void showMenu(int level); //Função para mostrar o Menu
+List * createList(); //Cria, Inicializa e Retorna um Ponteiro para uma Lista
+void debug(); //FUNÇÃO PARA DEBUG
+NodeList * createNodeList(DataNode *d);//cria um novo nó
+int removeNode(List* L, int mat);//remove um nó pela matrícula
 NodeList * buscaMatricula ( int inputMatricula, List * root );//Função para Busca por Matricula em Lista
-void giveFile(); //Função que Pede ao Usuario o Nome do Arquivo e Depois o Lê
-List * createList();//Cria, Inicializa e Retorna um Ponteiro para uma Lista
-void debug();//FUNÇÃO PARA DEBUG
 int Insert(List *L, NodeList *NewNode); //Insere um nó de dados na lista
 NodeList * createNodeList(DataNode *d);//cria um novo nó
 
@@ -206,7 +207,9 @@ int Insert(List *L, NodeList *NewNode){
             return 0;
         L->next = NewNode;
     } else {
-        if ( atual == L->next) { //o elemento é o menor da lista, insere no início
+        if(atual->data->matricula == NewNode->data->matricula) // se a matricula já existir não insere
+            return 0;
+        if ( atual == L->next && atual->data->matricula > NewNode->data->matricula) { //o elemento é o menor da lista, insere no início
             NewNode->back = NULL;
             L->next->back = NewNode;
             NewNode->next = L->next;
@@ -215,8 +218,8 @@ int Insert(List *L, NodeList *NewNode){
             NewNode->next = atual->next;
             NewNode->back = atual;
             atual->next = NewNode;
-            if( atual->next != NULL)
-                (atual->next)->back = NewNode;
+            if( NewNode->next != NULL)
+                NewNode->next->back = NewNode;
         }
     }
     L->size++;
@@ -224,7 +227,7 @@ int Insert(List *L, NodeList *NewNode){
 }
 
 //Função que Busca o Registro pela Matricula, e retorna o POnteiro desse Registro... Caso não encontre, ele retorna o Ponteiro Anterior
-NodeList * buscaMatricula ( int inputMatricula, List * root ) {
+NodeList * buscaMatricula( int inputMatricula, List * root ) {
 
     if ( root == NULL || (*root).next == NULL )
         return NULL;
@@ -236,9 +239,36 @@ NodeList * buscaMatricula ( int inputMatricula, List * root ) {
     }
 
     if ( res->data->matricula == inputMatricula || (*res).next == NULL )
-        return res;
-    else
+        if(res->data->matricula > inputMatricula)
+            return res->back;
+        else
+            return res;
+    else if ((*res).back != NULL)
         return (*res).back;
+    else
+        return res;
+}
+
+//função que remove um nó da lista, dada a matricula
+int removeNode(List* L, int mat){
+    NodeList *node = buscaMatricula(mat, L);
+
+    if(node == NULL) // lista nao existe ou está vazia
+        return 0;
+    if(node->data->matricula != mat) //valor nao encontrado
+        return 0;
+    else
+        if(node->back == NULL) // valor encontrado no primeiro nó
+            L->next = node->next;
+        else
+            node->back->next = node->next; // valor encontrado no meio ou final
+
+    if(node->next != NULL) // se o valor não é o último
+        node->next->back = node->back;
+
+    L->size--; //decrementa o tamanho da lista
+    free(node);
+    return 1;
 }
 
 //Fim das Funções de Lista
