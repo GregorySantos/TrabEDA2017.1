@@ -55,7 +55,7 @@ void debug() {
 
     do {
         showMenu(0);
-    }while ( mainExecute(validadeCommand(1, 4)) );
+    }while ( mainExecute(validadeCommand(1, 5)) );
 }
 
 //Execução dos Comandos Principais
