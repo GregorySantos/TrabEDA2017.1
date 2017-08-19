@@ -19,9 +19,3 @@ void debug() {
         showMenu(0);
     }while ( mainExecute(validadeCommand(1, 5)) );
 }
-
-
-//Fim das Funções Complementares
-
-//Funções de Lista
-//Funções Unissex
