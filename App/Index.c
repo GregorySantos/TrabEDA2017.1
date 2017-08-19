@@ -30,7 +30,7 @@ typedef struct headList {
 
 int mainExecute(int command); //Execução dos Principais Comandos
 int validadeCommand(int start, int end); //Valida os Comandos Recebidos da Faixa [start, end]
-void breakLine ( char lineInput[] ); //Função que Trata cada Linha para Inserir em um Node
+DataNode * breakLine ( char lineInput[] ); //Função que Trata cada Linha para Inserir em um Node
 void giveFile(); //Função que recebe do usuario o nome do Arquivo
 int readFile(char output[], int choose); //Funçaõ para Ler algum Arquivo.
 void showMenu(int level); //Função para mostrar o Menu
@@ -40,7 +40,7 @@ NodeList * createNodeList(DataNode *d);//cria um novo nó
 int removeNode(List* L, int mat);//remove um nó pela matrícula
 NodeList * buscaMatricula ( int inputMatricula, List * root );//Função para Busca por Matricula em Lista
 int Insert(List *L, NodeList *NewNode); //Insere um nó de dados na lista
-NodeList * createNodeList(DataNode *d);//cria um novo nó
+void setFileData( char * input, DataNode * new, int data );//Vai setando o DataNode
 
 int main() {
 
@@ -55,7 +55,7 @@ void debug() {
 
     do {
         showMenu(0);
-    }while ( mainExecute(validadeCommand(1, 4)) );
+    }while ( mainExecute(validadeCommand(1, 5)) );
 }
 
 //Execução dos Comandos Principais
@@ -83,6 +83,7 @@ int mainExecute(int command) {
     }
 }
 //Fim das Funções Complementares
+
 //Funções de Menu
 
 //Função que Apresenta o Menu
@@ -139,34 +140,82 @@ void giveFile()
 int readFile(char output[], int choose)
 {
 
-  FILE *ptrFile;
-  char Data[SIZE];
-  if ( ( ptrFile = fopen(output, "r") ) == NULL ) {
-    printf("Erro ao Ler o Arquivo!\n");
-    return 0;
-  } else {
-    while ( !feof(ptrFile) ) {
-      fgets(Data, SIZE, ptrFile);
-      breakLine(Data);
-      //Implementar a Passada dos Nodes Datas Criado para Nodes Especificos para cada Estrutura
-      //Bug: Na última Interação o BreakLine imprime o número 1000, não sei se ficará assim quando os dados forem inseridos diretamente no TAD.
+    FILE *ptrFile;
+    char Data[SIZE];
+    if ( ( ptrFile = fopen(output, "r") ) == NULL ) {
+        printf("Erro ao Ler o Arquivo!\n");
+        return 0;
+    } else {
+        fgets(Data, SIZE, ptrFile);//Pula a primeira Linha
+        fgets(Data, SIZE, ptrFile);//Pula a segunda Linha
+        while ( !feof(ptrFile) ) {
+            fgets(Data, SIZE, ptrFile);
+            breakLine(Data);
+            //Implementar a Passada dos Nodes Datas Criado para Nodes Especificos para cada Estrutura
+            //Bug: Na última Interação o BreakLine imprime o número 1000, não sei se ficará assim quando os dados forem inseridos diretamente no TAD.
+        }
+        fclose(ptrFile);
+        return 1;
     }
-    fclose(ptrFile);
-    return 1;
-  }
 }
 
-//Recebe a Linha e trata para enviar para algum Node os Dados ( Implementar a Criação da Data )
-void breakLine ( char lineInput[] )
+//Recebe a Linha e trata para enviar para algum Node os Dados
+DataNode * breakLine ( char lineInput[] )
 {
+
+    DataNode * container = malloc(sizeof(DataNode));
+    int data = 0;
+    int Quantidade; //Armazena quantos dados serão inseridos
 
     char *ptrData;
 
     ptrData = strtok(lineInput, ",");
-    while ( ptrData ) {
-        //Implementar a Criação de Data
+
+    while ( ptrData ) { //Cada palavra da Linha é um Loop
+        setFileData(ptrData, container, data);//Vai setando as informações no DataNode
+        data = (data + 1) % 6; //Atualiza o Data
         printf("%s\n", ptrData);
         ptrData = strtok(NULL, ",");
+    }
+
+    return container;
+}
+//Fim das Funções de Leitura de Arquivo
+
+//Funções de Lista
+
+//Vai setando o DataNode
+void setFileData( char * input, DataNode * new, int data ) {
+    char * text;
+
+    switch (data) {//Verifica qual o tipo de Dado que será lido
+        case 0://Caso seja a Matricula
+            (*new).matricula = atoi(input);
+            break;
+        case 1://Caso seja Uma String
+        case 2://Caso seja Uma String
+        case 3://Caso seja uma String
+        case 4://Caso seja uma String
+            text = (char*) malloc(sizeof(char) * strlen(input));
+            strncpy(text, input, strlen(input));
+            switch (data) {//Verfica que da do Tipo String será passado
+                case 1://Caso seja o nome
+                    (*new).nome = text;
+                    break;
+                case 2://Caso seja o Sobrenome
+                    (*new).sobrenome = text;
+                    break;
+                case 3://Caso seja o Email
+                    (*new).email = text;
+                    break;
+                case 4://Caso seja o Telefone
+                    (*new).telefone = text;
+                    break;
+            }
+            break;
+        case 5://Caso seja o Salario
+            (*new).salario = atof(input);
+            break;
     }
 }
 //Fim das Funções de Leitura de Arquivo
