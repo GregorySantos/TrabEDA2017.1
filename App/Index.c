@@ -39,8 +39,10 @@ void debug(); //FUNÇÃO PARA DEBUG
 NodeList * createNodeList(DataNode *d);//cria um novo nó
 int removeNode(List* L, int mat);//remove um nó pela matrícula
 NodeList * buscaMatricula ( int inputMatricula, List * root );//Função para Busca por Matricula em Lista
-int Insert(List *L, NodeList *NewNode); //Insere um nó de dados na lista
 void setFileData( char * input, DataNode * new, int data );//Vai setando o DataNode
+int InsertList(List *L, NodeList *NewNode); //Função para inserir um nó na lista, ordenado pela matrícula
+void * Create(int type); //Cria alguma estrutura de Dado e retorna o seu ponteiro
+void Insert(void * Head, void * Node, int type ); //Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
 
 int main() {
 
@@ -139,9 +141,25 @@ void giveFile()
 //Lê o Arquivo para encaminhar as Linhas com os Dados para a Função de Criar Node
 int readFile(char output[], int choose)
 {
-
+	DataNode *d;
     FILE *ptrFile;
     char Data[SIZE];
+    List *rootList;
+    //ponteiro para árvore aqui
+
+    switch (choose) {
+        case 1:
+            rootList = (List *) Create(1);
+            break;
+        case 2:
+            // aqui vem a opção de criar árvore
+            break;
+        case 3:
+            rootList = (List *) Create(1);
+            // aqui vem a opção de criar árvore
+            break;
+    }
+
     if ( ( ptrFile = fopen(output, "r") ) == NULL ) {
         printf("Erro ao Ler o Arquivo!\n");
         return 0;
@@ -150,10 +168,21 @@ int readFile(char output[], int choose)
         fgets(Data, SIZE, ptrFile);//Pula a segunda Linha
         while ( !feof(ptrFile) ) {
             fgets(Data, SIZE, ptrFile);
-            breakLine(Data);
-            //Implementar a Passada dos Nodes Datas Criado para Nodes Especificos para cada Estrutura
-            //Bug: Na última Interação o BreakLine imprime o número 1000, não sei se ficará assim quando os dados forem inseridos diretamente no TAD.
+            d = breakLine(Data);
+            switch (choose) {
+                case 1:
+                    Insert(rootList, d, 1);
+                    break;
+                case 2:
+                    //Insert(rootAvl, d, 0);
+                    break;
+                case 3:
+                    Insert(rootList, d, 1);
+                    //Insert(rootAvl, d, 0);
+                    break;
+            }
         }
+
         fclose(ptrFile);
         return 1;
     }
@@ -218,6 +247,7 @@ void setFileData( char * input, DataNode * new, int data ) {
             break;
     }
 }
+
 //Fim das Funções de Leitura de Arquivo
 
 //Funções de Lista
@@ -247,7 +277,7 @@ NodeList * createNodeList(DataNode *d){
 }
 
 //Função para inserir um nó na lista, ordenado pela matrícula
-int Insert(List *L, NodeList *NewNode){
+int InsertList(List *L, NodeList *NewNode){
 
     NodeList *atual = buscaMatricula(NewNode->data->matricula, L);
 
@@ -321,3 +351,21 @@ int removeNode(List* L, int mat){
 }
 
 //Fim das Funções de Lista
+
+//Funções Unissex
+
+//Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
+void Insert(void * Head, void * Data, int type ) {
+    if (type)
+        InsertList( (List *) Head, createNodeList((DataNode *) Data));
+    // else
+        //Insert AVL
+}
+
+//Cria alguma estrutura de Dado e retorna o seu ponteiro
+void * Create(int type) {
+    if (type)
+        return createList();
+    //else
+        //Return Função criar AVL
+}
