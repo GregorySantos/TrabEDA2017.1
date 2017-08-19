@@ -43,6 +43,7 @@ void setFileData( char * input, DataNode * new, int data );//Vai setando o DataN
 int InsertList(List *L, NodeList *NewNode); //Função para inserir um nó na lista, ordenado pela matrícula
 void * Create(int type); //Cria alguma estrutura de Dado e retorna o seu ponteiro
 void Insert(void * Head, void * Node, int type ); //Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
+void FreeNode(NodeList *node);
 
 int main() {
 
@@ -346,8 +347,16 @@ int removeNode(List* L, int mat){
         node->next->back = node->back;
 
     L->size--; //decrementa o tamanho da lista
-    free(node);
+    FreeNode(node);
     return 1;
+}
+
+void FreeNode(NodeList *node){
+	free(node->data->nome);
+	free(node->data->sobrenome);
+	free(node->data->email);
+	free(node->data->telefone);
+	free(node->data);
 }
 
 //Fim das Funções de Lista
