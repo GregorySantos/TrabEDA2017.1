@@ -20,6 +20,8 @@ int fatorBalanceamento(ArvNoPtr raiz);
 ArvNoPtr rotacaoDir(ArvNoPtr raiz);
 ArvNoPtr rotacaoEsq(ArvNoPtr raiz);
 ArvNoPtr BuscaArvoreMatricula(ArvNoPtr treePtr, int matricula);
+void ImpressaoArvoreOrdem(ArvNoPtr treePtr);
+void showAllTree(ArvNoPtr treePtr);
 
 //funcao para alocar espaco numa estrutura de no
 void inicializarTreeNO(ArvNoPtr *atual){
@@ -95,6 +97,25 @@ ArvNoPtr BuscaArvoreMatricula(ArvNoPtr treePtr, int matricula){
         }
     }else{
         return NULL;
+    }
+}
+
+//funcao para imprimir toda a arvore por ordem da matricula
+void ImpressaoArvoreOrdem(ArvNoPtr treePtr){
+    if(treePtr != NULL){ //se a arvore nao estiver vazia, ent�o percorra
+        ImpressaoArvoreOrdem(treePtr->esqPtr);
+
+		showData(treePtr->dados);
+
+		ImpressaoArvoreOrdem(treePtr->dirPtr);
+    } // fim do if
+}
+
+void showAllTree(ArvNoPtr treePtr) {
+    if ( treePtr == NULL ) {
+        printf("Arvore Vazia!\n");
+    } else {
+        ImpressaoArvoreOrdem(treePtr);
     }
 }
 

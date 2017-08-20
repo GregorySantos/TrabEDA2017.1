@@ -131,7 +131,7 @@ void Select(void *Tads[], int type, int quant ) {
                     break;
                 case 3://Todos
                     TimePass(0);
-                    showAllList(Tads[type]);
+                    showAllList((List *) Tads[type]);
                     showTime(TimePass(1));
                     break;
             }
@@ -145,7 +145,7 @@ void Select(void *Tads[], int type, int quant ) {
                     TimePass(0);
                     res = BuscaArvoreMatricula(Tads[type], matricula);
                     if ( res != NULL ) {
-                        showData(((ArvNoPtr) res)->data);
+                        showData(((ArvNoPtr) res)->dados);
                     } else {
                         printf("Registro não encontrado!\n\n");
                     }
@@ -154,6 +154,9 @@ void Select(void *Tads[], int type, int quant ) {
                 case 2://Nome
                     break;
                 case 3://Todos
+                    TimePass(0);
+                    showAllTree((ArvNoPtr) Tads[type]);
+                    showTime(TimePass(1));
                     break;
             }
             break;

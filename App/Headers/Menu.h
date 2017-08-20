@@ -9,6 +9,8 @@ void showMenu(int level); //Função para mostrar o Menu
 void giveCommand(void * Tads[]); //Recebe internamente algum comando e encaminha para a função da ação
 void giveDelete(void * Tads[], int choose); //Recebe qual Tad irá ser editado e encaminha para a ação
 void giveUpdate (void * Tads[], int choose); //Recebe qual Tad irá ser editado e encaminha para a ação
+void giveView(void * Tads[]); //Recebe os Tads e verifica qual Tad o usuario quer visualziar
+void giveWhere( void * Tads[], int choose);//Recebe a Escolha do Tad e pergunta quem serão e como serão exibidos
 
 //Dependências
 #include "File.h"
@@ -35,9 +37,7 @@ int mainExecute(int command, void * Tads[]) {
             //Função que Recebe qual estrutura irá editar como parâmetro, e pergunta se deseja Editar ou Excluir os Dados
             return 1;
         case 4:
-            showMenu(1);
-            validadeCommand(1, 4);//Função que recebe qual a Estrutura irá ser visualizada
-            //Função que Recebe qual Tad será visualizado, quantos serão visualizados e exibe na tela
+            giveView(Tads);
             return 1;
         case 5:
             return 0;
@@ -56,6 +56,7 @@ int validadeCommand(int start, int end) {
     while ( res < start || res > end ) {
         printf("Comando não identificado! Por favor, digite novamente: ");
         scanf("%d", &res);
+        getchar();
     }
 
     return res;
@@ -75,7 +76,10 @@ void showMenu(int level) {
             printf("Como deseja Editar?\n\n1 - Excluir\n2 - Atualizar\n3 - Voltar\n\n");
             break;
         case 3:
-            printf("Qual dado deseja Editar?\n\n1 - Nome\n2 - Sobrenome\n3 - Email\n4 - Salario\n5 - Voltar\n");
+            printf("Qual dado deseja Editar?\n\n1 - Nome\n2 - Sobrenome\n3 - Email\n4 - Salario\n5 - Voltar\n\n");
+            break;
+        case 4:
+            printf("Como deseja Exibir?\n\n1 - Matricula\n2 - Nome\n3 - Todos\n4 - Voltar\n\n");
             break;
     }
 }
@@ -137,6 +141,36 @@ void giveUpdate (void * Tads[], int choose) {
         case 2://Caso escolha Atualizar da Arvore
             //Update(Tads, matricula, 0); //Escolhe Deletar da Arvore
             break;
+    }
+}
+
+//Recebe os Tads e verifica qual Tad o usuario quer visualziar
+void giveView(void * Tads[]) {
+    showMenu(1);
+    int choose = validadeCommand(1, 3);
+    while ( choose != 3 ){//Função que recebe qual a Estrutura irá ser visualizada
+        giveWhere(Tads, choose);
+        showMenu(1);
+        choose = validadeCommand(1, 3);
+    }
+    //Função que Recebe qual Tad será visualizado, quantos serão visualizados e exibe na tela
+}
+
+//Recebe a Escolha do Tad e pergunta quem serão e como serão exibidos
+void giveWhere( void * Tads[], int choose) {
+    showMenu(4);
+    int quantify = validadeCommand(1, 4);
+    while ( quantify != 4 ) {
+        switch (choose) {
+            case 1://Escolheu Lista
+                Select(Tads, 1, quantify);
+                break;
+            case 2://Escolheu Arvore
+                Select(Tads, 0, quantify);
+                break;
+        }
+        showMenu(4);
+        quantify = validadeCommand(1, 4);
     }
 }
 #endif
