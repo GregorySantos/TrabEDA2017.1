@@ -11,6 +11,8 @@ typedef struct datanode{
     double salario; //Armazena o Salario
 }DataNode;
 
+typedef DataNode *DataNodePtr; //declarando a estrutura de dados como ponteiro
+
 void setFileData( char * input, DataNode * new, int data );//Vai setando o DataNode
 
 //Vai setando o DataNode
@@ -52,4 +54,14 @@ void setFileData( char * input, DataNode * new, int data ) {
 DataNode * createData() {
     return malloc(sizeof(DataNode));
 }
+
+//Libera todos os ponteiros de um datanode
+FreeDataNode(Datanode *D){
+    free(nome);
+    free(sobrenome);
+    free(email);
+    free(telefone);
+    free(D);
+}
+
 #endif
