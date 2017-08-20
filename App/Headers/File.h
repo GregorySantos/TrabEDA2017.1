@@ -17,8 +17,6 @@
 DataNode * breakLine ( char lineInput[] ); //Função que Trata cada Linha para Inserir em um Node
 void giveFile(); //Função que recebe do usuario o nome do Arquivo
 int readFile(char output[], int choose); //Funçaõ para Ler algum Arquivo.
-void setFileData( char * input, DataNode * new, int data );//Vai setando o DataNode
-
 
 //Pede ao Usuario o Nome do Arquivo e Depois Lê
 void giveFile()
@@ -104,41 +102,6 @@ DataNode * breakLine ( char lineInput[] )
     }
 
     return container;
-}
-
-//Vai setando o DataNode
-void setFileData( char * input, DataNode * new, int data ) {
-    char * text;
-
-    switch (data) {//Verifica qual o tipo de Dado que será lido
-        case 0://Caso seja a Matricula
-            (*new).matricula = atoi(input);
-            break;
-        case 1://Caso seja Uma String
-        case 2://Caso seja Uma String
-        case 3://Caso seja uma String
-        case 4://Caso seja uma String
-            text = (char*) malloc(sizeof(char) * strlen(input));
-            strncpy(text, input, strlen(input));
-            switch (data) {//Verfica que da do Tipo String será passado
-                case 1://Caso seja o nome
-                    (*new).nome = text;
-                    break;
-                case 2://Caso seja o Sobrenome
-                    (*new).sobrenome = text;
-                    break;
-                case 3://Caso seja o Email
-                    (*new).email = text;
-                    break;
-                case 4://Caso seja o Telefone
-                    (*new).telefone = text;
-                    break;
-            }
-            break;
-        case 5://Caso seja o Salario
-            (*new).salario = atof(input);
-            break;
-    }
 }
 
 #endif
