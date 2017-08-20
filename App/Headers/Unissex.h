@@ -9,17 +9,18 @@
 
 void Delete(void *Tads[], int matricula, int type ); //Delta algum nó pela matricula
 void * Create(int type, DataNode * startData); //Cria alguma estrutura de Dado e retorna o seu ponteiro
-void Insert(void * Tads[], void * Data, int type ); //Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
+int Insert(void * Tads[], void * Data, int type ); //Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
 int Update(void *Tads[], int matricula, int type ); //Retorna 0 caso não tenha algum erro de atualização
 
 //Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
-void Insert(void * Tads[], void * Data, int type ) {
+int Insert(void * Tads[], void * Data, int type ) {
     switch (type) {
         case 1:
             if ( !(InsertList( (List *) Tads[type], createNodeList((DataNode *) Data))) ) { //Comunica Erro
                 printf("\n=====Erro ao Inserir na Lista! Espaço Insuficiente ou Matrícula %d já Existente!=====\n", ((*(DataNode *) Data).matricula) );
+                return 0;
             }
-            break;
+            return 1;
         //case 0:
             // Tads[0] = InsertTree( (RootTree *) Tads[type], Data) @Função para Inserir na Arvore | Tratamento de Erro Interno
             // break;

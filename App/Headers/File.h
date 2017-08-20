@@ -27,8 +27,8 @@ void giveFile(void * Tads[]) {
     printf("Digite o nome do arquivo com o formato '.csv': ");
     scanf("%s", FilePath);
     showMenu(1);//Pergunbta ao Usuario qual será a Estrutura a ser Afetada
-    int choose = validadeCommand(1, 4);
-    if ( choose != 4 )//Pula se o usuario cancelar
+    int choose = validadeCommand(1, 3);
+    if ( choose != 3 )//Pula se o usuario cancelar
         readFile(FilePath, choose, Tads);
 }
 
@@ -37,14 +37,7 @@ int readFile(char output[], int choose, void * Tads[]) {
 
     FILE *ptrFile;
     char Data[SIZE];
-
-    switch (choose) { //Somente a Lista deve ser Inicializada sem um NodeData
-        case 3:
-        case 1:
-            if ( Tads[1] == NULL )
-                Tads[1] = (void *) Create(1, (DataNode *) NULL);
-            break;
-    }
+    int Quant = 0; //Quantidade de Dados Inseridos com Sucesso
 
     if ( ( ptrFile = fopen(output, "r") ) == NULL ) {
         printf("Erro ao Ler o Arquivo!\n");
@@ -57,24 +50,24 @@ int readFile(char output[], int choose, void * Tads[]) {
             fgets(Data, SIZE, ptrFile);
             switch (choose) {
                 case 1:
-                    Insert(Tads, breakLine(Data), 1); //Insere na Lista
+                    if ( Tads[1] == NULL )
+                        Tads[1] = (void *) Create(1, (DataNode *) NULL);
+                    if ( Insert(Tads, breakLine(Data), 1) ) //Insere na Lista
+                        Quant++;
                     break;
                 case 2:
-                    //if ( Tads[0] == NULL ) //Se a arvore não existe cria uma Raiz e Insere os Dados
+                    //if ( Tads[0] == NULL ){ //Se a arvore não existe cria uma Raiz e Insere os Dados
                         //Tads[0] = Create(0, breakLine(data));
-                    //else
+                        //Quant++;
+                    //}else{
                         //Insert(Tads, breakLine(Data), 0); //Insere na Arvore
-                    break;
-                case 3:
-                    Insert(Tads, breakLine(Data), 1); //Insere na Lista
-                    //if ( Tads[0] == NULL ) //Se a arvore não existe cria uma Raiz e Insere os Dados
-                        //Tads[0] = Create(0, breakLine(data));
-                    //else
-                        //Insert(Tads, breakLine(Data), 0); //Insere na Arvore
+                        //Quant++;
+                    //}
                     break;
             }
         }
         showTime(TimePass(1));
+        printf("\n\n***** Quantidade de Dados Importados: %d *****\n\n", Quant);
         fclose(ptrFile);
 
         return 1;
@@ -86,7 +79,6 @@ DataNode * breakLine ( char lineInput[] ) {
 
     DataNode * container = createData();
     int data = 0;
-    int Quantidade; //Armazena quantos dados serão inseridos
 
     char *ptrData;
 
