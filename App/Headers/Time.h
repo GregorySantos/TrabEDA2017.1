@@ -3,16 +3,21 @@
 
 //Dependências
 #include <time.h>
+#include <stdio.h>
 
-//Constante
+//Calcula o Tempo Passado op = 1, retorna o tempo em segundos desde a última vez que a função foi gerada no modo 0.
+double TimePass(int op) {
+    static clock_t timeInput;
 
-//Seta o Tempo ou Retorna o Valor do Tempo
-/*
- * op = 0 - Read | 1 - Write
- * type = 1 - List | 0 - Tree
- * action = 00 - Busca Unica | 01 - Leitura Unica | 02 - Criação Única | 03 - Deleção Única | 12 - Importação
- */
-void Time(int op, int type, int action, int value) {
-    static double
+    if ( op ) {
+        return (double) (clock() - timeInput)/CLOCKS_PER_SEC;
+    } else {
+        timeInput = clock();
+        return 0;
+    }
+}
+
+void showTime(double numberInput) {
+    printf("\n\n***********Essa operação levou: %f segundos**********\n\n", numberInput);
 }
 #endif
