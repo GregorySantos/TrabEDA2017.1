@@ -54,11 +54,11 @@ DataNode * createData() {
 }
 
 //Libera todos os ponteiros de um datanode
-FreeDataNode(Datanode *D){
-    free(nome);
-    free(sobrenome);
-    free(email);
-    free(telefone);
+void FreeDataNode(DataNode *D){
+    free((*D).nome);
+    free((*D).sobrenome);
+    free((*D).email);
+    free((*D).telefone);
     free(D);
 }
 
