@@ -54,4 +54,14 @@ void setFileData( char * input, DataNode * new, int data ) {
 DataNode * createData() {
     return malloc(sizeof(DataNode));
 }
+
+//Libera todos os ponteiros de um datanode
+FreeDataNode(Datanode *D){
+    free(nome);
+    free(sobrenome);
+    free(email);
+    free(telefone);
+    free(D);
+}
+
 #endif
