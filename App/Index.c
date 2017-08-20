@@ -1,41 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#define SIZE 100000
-#define PATH 128
-
-//Estruturas Definidas
-
-typedef struct datanode{
-    int matricula;  //Armazenar a Matricula
-    char *nome; //Armazenar o Nome
-    char *sobrenome; //Armazenar o Sobrenome
-    char *email; //Armazenar o Email
-    char *telefone; //Armazena o Telefone
-    double salario; //Armazena o Salario
-}DataNode;
-
-typedef struct nodeList {
-    struct nodeList *back; //Armazenar o Anterior
-    struct nodeList *next; //Armazenar o Próxima
-    struct datanode *data;
-}NodeList; //Cada Node da Lista
-
-typedef struct headList {
-    struct nodeList *next; //Armazenar o Próxima
-    int size; //Aramazna o Tamanho da Lista
-}List;//Uma Lista
+#include "Headers/All.h"
 
 //Assinaturas de Funções
 
-int mainExecute(int command); //Execução dos Principais Comandos
-int validadeCommand(int start, int end); //Valida os Comandos Recebidos da Faixa [start, end]
-DataNode * breakLine ( char lineInput[] ); //Função que Trata cada Linha para Inserir em um Node
-void giveFile(); //Função que recebe do usuario o nome do Arquivo
-int readFile(char output[], int choose); //Funçaõ para Ler algum Arquivo.
-void showMenu(int level); //Função para mostrar o Menu
-List * createList(); //Cria, Inicializa e Retorna um Ponteiro para uma Lista
 void debug(); //FUNÇÃO PARA DEBUG
+<<<<<<< HEAD
 NodeList * createNodeList(DataNode *d);//cria um novo nó
 int removeNode(List* L, int mat);//remove um nó pela matrícula
 NodeList * buscaMatricula ( int inputMatricula, List * root );//Função para Busca por Matricula em Lista
@@ -44,6 +12,8 @@ int InsertList(List *L, NodeList *NewNode); //Função para inserir um nó na li
 void * Create(int type); //Cria alguma estrutura de Dado e retorna o seu ponteiro
 void Insert(void * Head, void * Node, int type ); //Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
 void FreeNode(NodeList *node);
+=======
+>>>>>>> master
 
 int main() {
 
@@ -60,6 +30,7 @@ void debug() {
         showMenu(0);
     }while ( mainExecute(validadeCommand(1, 5)) );
 }
+<<<<<<< HEAD
 
 //Execução dos Comandos Principais
 int mainExecute(int command) {
@@ -379,3 +350,5 @@ void * Create(int type) {
     //else
         //Return Função criar AVL
 }
+=======
+>>>>>>> master
