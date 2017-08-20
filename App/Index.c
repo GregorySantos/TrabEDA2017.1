@@ -1,21 +1,13 @@
 #include "Headers/All.h"
 
-//Assinaturas de Funções
-
-void debug(); //FUNÇÃO PARA DEBUG
-
 int main() {
 
-    debug();
-    return 0;
+    void * Tads[2] = {NULL, NULL}; //Tads[0] é da Arvore | Tads[1] é da Lista
 
-}
-
-//Funções Complementares
-
-void debug() {
-    
     do {
         showMenu(0);
-    }while ( mainExecute(validadeCommand(1, 5)) );
+    } while ( mainExecute ( validadeCommand(1, 5), Tads) );
+
+    return 0;
+
 }

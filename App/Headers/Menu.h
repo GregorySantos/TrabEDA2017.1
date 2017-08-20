@@ -1,25 +1,26 @@
 #ifndef MENU_INCLUDED
 #define MENU_INCLUDED
 
-//Dependências
-#include "File.h"
-#include <stdio.h>
-
-void giveFile(); //Função que recebe do usuario o nome do Arquivo
-
 //Assinaturas de Funções do Menu
 
-int mainExecute(int command); //Execução dos Principais Comandos
+int mainExecute(int command, void * Tads[]); //Execução dos Principais Comandos
 int validadeCommand(int start, int end); //Valida os Comandos Recebidos da Faixa [start, end]
 void showMenu(int level); //Função para mostrar o Menu
 
+//Dependências
+#include "File.h"
+#include "Data.h"
+#include <stdio.h>
+
+
 //Execução dos Comandos Principais
-int mainExecute(int command) {
+int mainExecute(int command, void * Tads[]) {
     switch (command) {
         case 1:
-            giveFile();
+            giveFile(Tads);
             return 1;
         case 2:
+            giveData(Tads);
             //Função para Criar NodeData
             //FunçãO para Ligar o NodeData a algum Nó de alguma Tad que o Usuario escolher
             return 1;
