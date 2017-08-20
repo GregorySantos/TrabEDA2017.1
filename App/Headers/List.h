@@ -16,19 +16,19 @@ typedef struct headList {
 
 
 List * createList(); //Cria, Inicializa e Retorna um Ponteiro para uma Lista
-NodeList * createNodeList(DataNode *d);//cria um novo nó
-int removeNode(List* L, int mat);//remove um nó pela matrícula
-NodeList * buscaMatricula ( int inputMatricula, List * root );//Função para Busca por Matricula em Lista
+int removeNodeList(List* L, int mat);//remove um nó pela matrícula
+NodeList * buscaMatriculaList ( int inputMatricula, List * root );//Função para Busca por Matricula em Lista
 int InsertList(List *L, NodeList *NewNode); //Função para inserir um nó na lista, ordenado pela matrícula
-NodeList * buscaNome(List *L, char *n, char *sn); //função busca um nó na lista pelo nome e sobrenome, e retorna um ponteiro pro nó
+NodeList * buscaNomeList(List *L, char *n, char *sn); //função busca um nó na lista pelo nome e sobrenome, e retorna um ponteiro pro nó
 NodeList * buscaEqualsList(int inputMatricula, List * root ); //Função que retorna se existe a matricula exata na lista
-void deleteNodeList(NodeList * input); //Remove Node de Lista
 void showAllList(List *L);
 
 //dependências
 #include "Data.h"
 #include <strings.h>
 
+NodeList * createNodeList(DataNode *d);//cria um novo nó
+void deleteNodeList(NodeList * input); //Remove Node de Lista
 
 //Função que Aloca um Espaço para criar a Lista e Retorna o Ponteiro da Lista
 List * createList()
@@ -57,7 +57,7 @@ NodeList * createNodeList(DataNode *d){
 //Função para inserir um nó na lista, ordenado pela matrícula ( Retona 0 se Matricula já existe, ou Lista Não inicializada ou Espaço não Alocado )
 int InsertList(List *L, NodeList *NewNode){
 
-    NodeList *atual = buscaMatricula(NewNode->data->matricula, L);
+    NodeList *atual = buscaMatriculaList(NewNode->data->matricula, L);
 
     if ( atual == NULL ) {
         if ( L == NULL )
@@ -84,7 +84,7 @@ int InsertList(List *L, NodeList *NewNode){
 }
 
 //Função que Busca o Registro pela Matricula, e retorna o POnteiro desse Registro... Caso não encontre, ele retorna o Ponteiro Anterior
-NodeList * buscaMatricula( int inputMatricula, List * root ) {
+NodeList * buscaMatriculaList( int inputMatricula, List * root ) {
 
     if ( root == NULL || (*root).next == NULL )
         return NULL;
@@ -107,8 +107,8 @@ NodeList * buscaMatricula( int inputMatricula, List * root ) {
 }
 
 //função que remove um nó da lista, dada a matricula ( Retorna 0 caso lista não existe ou matrícula não existe )
-int removeNode(List* L, int mat){
-    NodeList *node = buscaMatricula(mat, L);
+int removeNodeList(List* L, int mat){
+    NodeList *node = buscaMatriculaList(mat, L);
 
     if(node == NULL) // lista nao existe ou está vazia
         return 0;
@@ -129,17 +129,17 @@ int removeNode(List* L, int mat){
 }
 
 //função busca um nó na lista pelo nome e sobrenome, e retorna um ponteiro pro nó
-NodeList * buscaNome(List *L, char *n, char *sn){
+NodeList * buscaNomeList(List *L, char *n, char *sn){
     if( L == NULL || L->next == NULL)
         return NULL;
 
     NodeList *aux = L->next;
 
-    while((strcasecmp(n, aux->data->nome) != 0) || (strcasecmp(sn, aux->data->sobrenome) != 0)  && aux->next != NULL){
+    while((strcasecmp(n, aux->data->nome) != 0) || ((strcasecmp(sn, aux->data->sobrenome) != 0)  && (aux->next != NULL)) ){
         aux = aux->next;
     }
 
-    if(aux->next == NULL && (strcasecmp(n, aux->data->nome) != 0) || (strcasecmp(sn, aux->data->sobrenome) != 0))
+    if( ((aux->next == NULL) && (strcasecmp(n, aux->data->nome) != 0)) || (strcasecmp(sn, aux->data->sobrenome) != 0))
         return NULL;
     else
         return aux;
@@ -147,7 +147,7 @@ NodeList * buscaNome(List *L, char *n, char *sn){
 
 //Função que diz exatamente se a Matricula esta na Lista
 NodeList * buscaEqualsList(int inputMatricula, List * root ) {
-    NodeList * res = buscaMatricula(inputMatricula, root);
+    NodeList * res = buscaMatriculaList(inputMatricula, root);
     if ( (res->data)->matricula == inputMatricula )
         return res;
     else

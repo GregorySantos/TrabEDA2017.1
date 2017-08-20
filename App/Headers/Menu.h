@@ -42,6 +42,7 @@ int mainExecute(int command, void * Tads[]) {
         case 5:
             return 0;
     }
+    return 0;
 }
 
 //Função que Valida os Dados que Recebe do Menu
