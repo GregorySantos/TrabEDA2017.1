@@ -17,6 +17,7 @@ void FreeDataNode(DataNode *D); //Exclui completamente a Estrutura DataNode
 DataNode * setDataNode(); //Cria um DataNode individualmente
 char * createString(int sizeMax); //Helper para Criação de Strings
 void giveData(void * Tads[]); //Função que será chamada para colocar um novo Node em alguma Tad
+void editDataNode(int choose, DataNode *D); //Função para Editar o DataNode
 
 //Dependências
 #include <stdio.h>
@@ -72,6 +73,37 @@ void FreeDataNode(DataNode *D){
     free((*D).email);
     free((*D).telefone);
     free(D);
+}
+
+//Edita o DataNode Recebido
+void editDataNode(int choose, DataNode *D) {
+    switch (choose) {
+        case 1:
+        free((*D).nome);
+            printf("Digite o Nome ( Max: 128 Caracters ): ");
+            (*D).nome = createString(128);
+            break;
+        case 2:
+            free((*D).sobrenome);
+            printf("Digite o Sobrenome ( Max: 512 Caracters ): ");
+            (*D).sobrenome = createString(512);
+            break;
+        case 3:
+            free((*D).email);
+            printf("Digite o Email ( Max: 128 Caracters ): ");
+            (*D).email = createString(128);
+            break;
+        case 4:
+            free((*D).telefone);
+            printf("Digite o Telefone: ( Max: 16 Caracters ): ");
+            (*D).telefone = createString(16);
+            break;
+        case 5:
+            printf("Digite o Salario: ");
+            scanf("%lf", &((*D).salario));
+            getchar();
+            break;
+    }
 }
 
 //Cria um DataNode Individual
