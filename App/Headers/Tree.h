@@ -1,5 +1,8 @@
 #ifndef TREE_INCLUDED
 #define TREE_INCLUDED
+#include "Data.h"
+#include <string.h>
+#include <strings.h>
 
 //estrutura de arvore que recebera os dados;
 typedef struct ArvNo{
@@ -15,7 +18,7 @@ int pegarAltura(ArvNoPtr atual);
 int fatorBalanceamento(ArvNoPtr raiz);
 ArvNoPtr rotacaoDir(ArvNoPtr raiz);
 ArvNoPtr rotacaoEsq(ArvNoPtr raiz);
-DataNodePtr BuscaArvoreMatricula(ArvNoPtr treePtr, int matricula);
+ArvNoPtr BuscaArvoreMatricula(ArvNoPtr treePtr, int matricula);
 
 //funcao para alocar espaco numa estrutura de no
 void inicializarTreeNO(ArvNoPtr *atual){
@@ -80,14 +83,14 @@ ArvNoPtr rotacaoEsq(ArvNoPtr raiz){
 }
 
 //funcao para retornar um no a partir da matricula
-DataNodePtr BuscaArvoreMatricula(ArvNoPtr treePtr, int matricula){
+ArvNoPtr BuscaArvoreMatricula(ArvNoPtr treePtr, int matricula){
     if(treePtr!=NULL){
         if(matricula==(treePtr->dados)->matricula){
-            return treePtr->dados;
+            return treePtr;
         }else if(matricula<(treePtr->dados)->matricula){
-            return existeNo(treePtr->esqPtr, matricula);
+            return BuscaArvoreMatricula(treePtr->esqPtr, matricula);
         }else{
-            return existeNo(treePtr->dirPtr, matricula);
+            return BuscaArvoreMatricula(treePtr->dirPtr, matricula);
         }
     }else{
         return NULL;
