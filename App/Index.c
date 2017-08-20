@@ -19,4 +19,3 @@ void debug() {
         showMenu(0);
     }while ( mainExecute(validadeCommand(1, 5)) );
 }
-
