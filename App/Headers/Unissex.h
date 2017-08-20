@@ -2,6 +2,7 @@
 #define UNISSEX_INCLUDED
 
 //Dependências
+#include "Data.h"
 #include "Tree.h"
 #include "List.h"
 
@@ -12,7 +13,9 @@ void Insert(void * Tads[], void * Data, int type ); //Insere em Lista se Type ==
 void Insert(void * Tads[], void * Data, int type ) {
     switch (type) {
         case 1:
-            InsertList( (List *) Tads[type], createNodeList((DataNode *) Data));
+            if ( !(InsertList( (List *) Tads[type], createNodeList((DataNode *) Data))) ) { //Comunica Erro
+                printf("\n=====Erro ao Inserir na Lista! Espaço Insuficiente ou Matrícula %d já Existente!=====\n", ((*(DataNode *) Data).matricula) );
+            }
             break;
         //case 0:
             // Tads[0] = InsertTree( (RootTree *) Tads[type], Data) @Função para Inserir na Arvore

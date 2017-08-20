@@ -51,7 +51,7 @@ NodeList * createNodeList(DataNode *d){
     return node;
 }
 
-//Função para inserir um nó na lista, ordenado pela matrícula
+//Função para inserir um nó na lista, ordenado pela matrícula ( Retona 0 se Matricula já existe, ou Lista Não inicializada ou Espaço não Alocado )
 int InsertList(List *L, NodeList *NewNode){
 
     NodeList *atual = buscaMatricula(NewNode->data->matricula, L);
