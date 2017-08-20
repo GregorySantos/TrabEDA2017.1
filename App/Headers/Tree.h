@@ -1,5 +1,8 @@
 #ifndef TREE_INCLUDED
 #define TREE_INCLUDED
+#include "Data.h"
+#include <string.h>
+#include <strings.h>
 
 //estrutura de arvore que recebera os dados;
 typedef struct ArvNo{
@@ -9,8 +12,16 @@ typedef struct ArvNo{
 	int altura; //inteiro para informar a altura do no
 }*ArvNoPtr; //definindo o tipo como um ponteiro, assim, posso inicia-lo sem precisar do '*'
 
+void inicializarTreeNO(ArvNoPtr *atual);
+int maximo(int i, int j);
+int pegarAltura(ArvNoPtr atual);
+int fatorBalanceamento(ArvNoPtr raiz);
+ArvNoPtr rotacaoDir(ArvNoPtr raiz);
+ArvNoPtr rotacaoEsq(ArvNoPtr raiz);
+ArvNoPtr BuscaArvoreMatricula(ArvNoPtr treePtr, int matricula);
+
 //funcao para alocar espaco numa estrutura de no
-void inicializarNO(ArvNoPtr *atual){
+void inicializarTreeNO(ArvNoPtr *atual){
 	(*atual)=(struct ArvNo *)malloc(sizeof(struct ArvNo));
 }
 
@@ -71,5 +82,19 @@ ArvNoPtr rotacaoEsq(ArvNoPtr raiz){
 	return auxDir;		//retorna a nova raiz;
 }
 
+//funcao para retornar um no a partir da matricula
+ArvNoPtr BuscaArvoreMatricula(ArvNoPtr treePtr, int matricula){
+    if(treePtr!=NULL){
+        if(matricula==(treePtr->dados)->matricula){
+            return treePtr;
+        }else if(matricula<(treePtr->dados)->matricula){
+            return BuscaArvoreMatricula(treePtr->esqPtr, matricula);
+        }else{
+            return BuscaArvoreMatricula(treePtr->dirPtr, matricula);
+        }
+    }else{
+        return NULL;
+    }
+}
 
 #endif
