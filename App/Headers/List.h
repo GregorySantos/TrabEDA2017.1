@@ -22,6 +22,7 @@ NodeList * buscaMatricula ( int inputMatricula, List * root );//Função para Bu
 int InsertList(List *L, NodeList *NewNode); //Função para inserir um nó na lista, ordenado pela matrícula
 NodeList * buscaNome(List *L, char *n, char *sn); //função busca um nó na lista pelo nome e sobrenome, e retorna um ponteiro pro nó
 NodeList * buscaEqualsList(int inputMatricula, List * root ); //Função que retorna se existe a matricula exata na lista
+void deleteNodeList(NodeList * input); //Remove Node de Lista
 
 //dependências
 #include "Data.h"
@@ -122,8 +123,7 @@ int removeNode(List* L, int mat){
         node->next->back = node->back;
 
     L->size--; //decrementa o tamanho da lista
-    FreeDataNode(node->data);
-    free(node);
+    deleteNodeList(node);
     return 1;
 }
 
@@ -147,11 +147,18 @@ NodeList * buscaNome(List *L, char *n, char *sn){
 //Função que diz exatamente se a Matricula esta na Lista
 NodeList * buscaEqualsList(int inputMatricula, List * root ) {
     NodeList * res = buscaMatricula(inputMatricula, root);
-    if ( (res->data)->matricula == inputMatricula ) 
+    if ( (res->data)->matricula == inputMatricula )
         return res;
     else
         return NULL;
 }
+
+//Remove Node de Lista
+void deleteNodeList(NodeList * input) {
+    FreeDataNode(input->data);
+    free(input);
+}
+
 //Fim das Funções de Lista
 
 #endif
