@@ -1,9 +1,6 @@
 #ifndef LIST_INCLUDED
 #define LIST_INCLUDED
 
-//dependências
-#include <strings.h>
-
 //Estruturas Definidas
 
 typedef struct nodeList {
@@ -17,12 +14,18 @@ typedef struct headList {
     int size; //Aramazna o Tamanho da Lista
 }List;//Uma Lista
 
+
 List * createList(); //Cria, Inicializa e Retorna um Ponteiro para uma Lista
 NodeList * createNodeList(DataNode *d);//cria um novo nó
 int removeNode(List* L, int mat);//remove um nó pela matrícula
 NodeList * buscaMatricula ( int inputMatricula, List * root );//Função para Busca por Matricula em Lista
 int InsertList(List *L, NodeList *NewNode); //Função para inserir um nó na lista, ordenado pela matrícula
 NodeList * buscaNome(List *L, char *n, char *sn); //função busca um nó na lista pelo nome e sobrenome, e retorna um ponteiro pro nó
+
+//dependências
+#include "Data.h"
+#include <strings.h>
+
 
 //Função que Aloca um Espaço para criar a Lista e Retorna o Ponteiro da Lista
 List * createList()
@@ -48,7 +51,7 @@ NodeList * createNodeList(DataNode *d){
     return node;
 }
 
-//Função para inserir um nó na lista, ordenado pela matrícula
+//Função para inserir um nó na lista, ordenado pela matrícula ( Retona 0 se Matricula já existe, ou Lista Não inicializada ou Espaço não Alocado )
 int InsertList(List *L, NodeList *NewNode){
 
     NodeList *atual = buscaMatricula(NewNode->data->matricula, L);

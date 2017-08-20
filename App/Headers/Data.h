@@ -1,7 +1,6 @@
 #ifndef DATA_INCLUDED
 #define DATA_INCLUDED
 
-
 typedef struct datanode{
     int matricula;  //Armazenar a Matricula
     char *nome; //Armazenar o Nome
@@ -11,7 +10,20 @@ typedef struct datanode{
     double salario; //Armazena o Salario
 }DataNode;
 
+//Assinaturas das Funções de Data
 void setFileData( char * input, DataNode * new, int data );//Vai setando o DataNode
+DataNode * createData(); //Cria uma Estrutura Data
+void FreeDataNode(DataNode *D); //Exclui completamente a Estrutura DataNode
+DataNode * setDataNode(); //Cria um DataNode individualmente
+char * createString(int sizeMax); //Helper para Criação de Strings
+void giveData(void * Tads[]); //Função que será chamada para colocar um novo Node em alguma Tad
+
+//Dependências
+#include <stdio.h>
+#include <string.h>
+#include "Menu.h"
+#include "Unissex.h"
+#include "Time.h"
 
 //Vai setando o DataNode
 void setFileData( char * input, DataNode * new, int data ) {
@@ -60,6 +72,82 @@ void FreeDataNode(DataNode *D){
     free((*D).email);
     free((*D).telefone);
     free(D);
+}
+
+//Cria um DataNode Individual
+DataNode * setDataNode() {
+    DataNode * new = createData();
+    printf("Digite a Matricula: ");
+    scanf("%d", &((*new).matricula));
+    getchar();
+    printf("Digite o Nome ( Max: 128 Caracters ): ");
+    (*new).nome = createString(128);
+    printf("Digite o Sobrenome ( Max: 512 Caracters ): ");
+    (*new).sobrenome = createString(512);
+    printf("Digite o Email ( Max: 128 Caracters ): ");
+    (*new).email = createString(128);
+    printf("Digite o Telefone: ( Max: 16 Caracters ): ");
+    (*new).telefone = createString(16);
+    printf("Digite o Salario: ");
+    scanf("%lf", &((*new).salario));
+    getchar();
+
+    return new;
+}
+
+//Cria uma String no Tamanho máximo de sizeMax.
+char * createString(int sizeMax) {
+    char *string = malloc(sizeof(char) * (sizeMax + 1));
+    fgets(string, 60, stdin);
+    strtok(string, "\n");
+    string = (char *) realloc(string, strlen(string) * sizeof(char) + 1);
+    return string;
+}
+
+void giveData(void * Tads[]) {//Vai setar um Nó em alguma Estrutura Individualmente
+
+    DataNode * Uno;
+    DataNode * Two;
+
+    showMenu(1);//Pergunbta ao Usuario qual será a Estrutura a ser Afetada
+    int choose = validadeCommand(1, 4);
+
+    switch (choose) { //Somente a Lista deve ser Inicializada sem um NodeData
+        case 3:
+        case 1:
+            if ( Tads[1] == NULL )
+                Tads[1] = Create(1, NULL);
+            break;
+    }
+
+    switch (choose) {
+        case 1:
+            Uno = setDataNode();
+            TimePass(0); //Começa a Cronometrar
+            Insert(Tads, Uno, 1); //Insere na Lista
+            showTime(TimePass(1));
+            break;
+        case 2:
+            Uno = setDataNode();
+            TimePass(0); //Começa a Cronometrar
+            //if ( Tads[0] == NULL ) //Se a arvore não existe cria uma Raiz e Insere os Dados
+                //Tads[0] = Create(0, Uno);
+            //else
+                //Insert(Tads, Uno, 0); //Insere na Arvore
+            showTime(TimePass(1));
+            break;
+        case 3:
+            Uno = setDataNode();
+            Two = setDataNode();
+            TimePass(0); //Começa a Cronometrar
+            Insert(Tads, Uno, 1); //Insere na Lista
+            //if ( Tads[0] == NULL ) //Se a arvore não existe cria uma Raiz e Insere os Dados
+                //Tads[0] = Create(0, breakLine(data));
+            //else
+                //Insert(Tads, setDataNode(), 0); //Insere na Arvore
+            showTime(TimePass(1));
+            break;
+    }
 }
 
 #endif
