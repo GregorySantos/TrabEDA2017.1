@@ -139,21 +139,14 @@ char * createString(int sizeMax) {
 void giveData(void * Tads[]) {//Vai setar um Nó em alguma Estrutura Individualmente
 
     DataNode * Uno;
-    DataNode * Two;
 
     showMenu(1);//Pergunbta ao Usuario qual será a Estrutura a ser Afetada
-    int choose = validadeCommand(1, 4);
-
-    switch (choose) { //Somente a Lista deve ser Inicializada sem um NodeData
-        case 3:
-        case 1:
-            if ( Tads[1] == NULL )
-                Tads[1] = Create(1, NULL);
-            break;
-    }
+    int choose = validadeCommand(1, 3);
 
     switch (choose) {
         case 1:
+            if ( Tads[1] == NULL )
+                Tads[1] = Create(1, NULL);
             Uno = setDataNode();
             TimePass(0); //Começa a Cronometrar
             Insert(Tads, Uno, 1); //Insere na Lista
@@ -166,17 +159,6 @@ void giveData(void * Tads[]) {//Vai setar um Nó em alguma Estrutura Individualm
                 //Tads[0] = Create(0, Uno);
             //else
                 //Insert(Tads, Uno, 0); //Insere na Arvore
-            showTime(TimePass(1));
-            break;
-        case 3:
-            Uno = setDataNode();
-            Two = setDataNode();
-            TimePass(0); //Começa a Cronometrar
-            Insert(Tads, Uno, 1); //Insere na Lista
-            //if ( Tads[0] == NULL ) //Se a arvore não existe cria uma Raiz e Insere os Dados
-                //Tads[0] = Create(0, breakLine(data));
-            //else
-                //Insert(Tads, setDataNode(), 0); //Insere na Arvore
             showTime(TimePass(1));
             break;
     }
