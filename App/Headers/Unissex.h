@@ -17,11 +17,11 @@ void Insert(void * Head, void * Data, int type ) {
 }
 
 //Cria alguma estrutura de Dado e retorna o seu ponteiro
-void * Create(int type) {
+void * Create(int type, DataNode * startData) {
     if (type)
         return createList();
     //else
-        //Return Função criar AVL
+        //retrun createAvl(startData)
 }
 
 #endif

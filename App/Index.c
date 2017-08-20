@@ -14,7 +14,7 @@ int main() {
 //Funções Complementares
 
 void debug() {
-
+    
     do {
         showMenu(0);
     }while ( mainExecute(validadeCommand(1, 5)) );
