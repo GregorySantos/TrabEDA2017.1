@@ -148,7 +148,7 @@ NodeList * buscaNome(List *L, char *n, char *sn){
 //Função que diz exatamente se a Matricula esta na Lista
 NodeList * buscaEqualsList(int inputMatricula, List * root ) {
     NodeList * res = buscaMatricula(inputMatricula, root);
-    if ( (res->data)->matricula == inputMatricula ) 
+    if ( (res->data)->matricula == inputMatricula )
         return res;
     else
         return NULL;
@@ -167,7 +167,7 @@ void showAllList(List *L){
     NodeList *aux = L->next;
 
     while(aux != NULL){
-        printf("Matricula: %d\nNome: %s %s\nemail: %s\nTelefone: %s\nSalario: %f\n", aux->data->matricula, aux->data->nome, aux->data->sobrenome, aux->data->email, aux->data->telefone, aux->data->salario);
+        showData(aux->data);
         aux = aux->next;
     }
 

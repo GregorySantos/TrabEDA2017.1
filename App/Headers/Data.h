@@ -18,6 +18,7 @@ DataNode * setDataNode(); //Cria um DataNode individualmente
 char * createString(int sizeMax); //Helper para Criação de Strings
 void giveData(void * Tads[]); //Função que será chamada para colocar um novo Node em alguma Tad
 void editDataNode(int choose, DataNode *D); //Função para Editar o DataNode
+void showData(DataNode * data);//Exibe o DataNode
 
 //Dependências
 #include <stdio.h>
@@ -162,6 +163,10 @@ void giveData(void * Tads[]) {//Vai setar um Nó em alguma Estrutura Individualm
             showTime(TimePass(1));
             break;
     }
+}
+
+void showData(DataNode * data) {//Exibe o DataNode
+    printf("\n\n=====\nMatricula: %d\nNome: %s %s\nemail: %s\nTelefone: %s\nSalario: %f\n=====\n\n", data->matricula, data->nome, data->sobrenome, data->email, data->telefone, data->salario);
 }
 
 #endif
