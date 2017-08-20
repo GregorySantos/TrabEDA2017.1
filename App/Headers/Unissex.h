@@ -74,13 +74,13 @@ int Update(void *Tads[], int matricula, int type ) {
                 } else
                     editDataNode(choose, ((NodeList *) find)->data); //Função para Editar o DataNode
                 break;
-            //case 2: //Edita da Arvore
-                //find = buscaMatriculaTree(matricula, Tads[type]); //Verifica se realmente a matricula existe na Lista
-                //if ( find == NULL ) {
-                    //showTime(TimePass(1));
-                    //return 0;
-                //} else
-                    //editDataNode(choose, ((NodeTree *) find)->data)); //Função para Editar o DataNode
+            case 2: //Edita da Arvore
+                find =  BuscaArvoreMatricula(Tads[type], matricula); //Verifica se realmente a matricula existe na Lista
+                if ( find == NULL ) {
+                    showTime(TimePass(1));
+                    return 0;
+                } else
+                    editDataNode(choose, ((ArvNoPtr) find)->dados); //Função para Editar o DataNode
         }
         showTime(TimePass(1));
         showMenu(3);

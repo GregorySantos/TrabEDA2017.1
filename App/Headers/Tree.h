@@ -1,8 +1,5 @@
 #ifndef TREE_INCLUDED
 #define TREE_INCLUDED
-#include "Data.h"
-#include <string.h>
-#include <strings.h>
 
 //estrutura de arvore que recebera os dados;
 typedef struct ArvNo{
@@ -11,6 +8,10 @@ typedef struct ArvNo{
 	struct ArvNo *dirPtr; //ponteiro para o filho a direita (maior) da raiz
 	int altura; //inteiro para informar a altura do no
 }*ArvNoPtr; //definindo o tipo como um ponteiro, assim, posso inicia-lo sem precisar do '*'
+
+#include "Data.h"
+#include <string.h>
+#include <strings.h>
 
 void inicializarTreeNO(ArvNoPtr *atual);
 int maximo(int i, int j);
@@ -53,15 +54,15 @@ ArvNoPtr rotacaoDir(ArvNoPtr raiz){
 	ArvNoPtr auxEsq, auxDir;		//dois auxiliares
 	auxEsq=raiz->esqPtr;		//este recebe a esquerda do NO raiz
 	auxDir=auxEsq->dirPtr;		//este recebe a direita da esquerda do NO raiz (pode ser NULL ou nao)
-	
+
 	//faz a rotacao
 	auxEsq->dirPtr=raiz;		//sobe a esquerda da raiz para ser a nova raiz, colocando a antiga raiz na direita
 	raiz->esqPtr=auxDir;		//coloca o que estava a direita da nova raiz na esquerda da antiga raiz, para nao perder dados
-	
+
 	//atualizar a altura dos nos que tiveram modificoes nos filhos (nos que nao tiveram filhos alterador nao precisam atualizar)
 	raiz->altura=1+maximo(pegarAltura(raiz->esqPtr), pegarAltura(raiz->dirPtr));
 	auxEsq->altura=1+maximo(pegarAltura(auxEsq->esqPtr), pegarAltura(auxEsq->dirPtr));
-	
+
 	return auxEsq;		//retorna a nova raiz;
 }
 
