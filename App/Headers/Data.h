@@ -62,4 +62,16 @@ void FreeDataNode(DataNode *D){
     free(D);
 }
 
+//Importa o Conato Individualmente
+void giveData(void * Tads[]) {
+
+    showMenu(1);//Pergunbta ao Usuario qual será a Estrutura a ser Afetada
+    int choose = validadeCommand(1, 4);
+    if ( choose != 4 )//Pula se o usuario cancelar
+        importData(choose, Tads); //Insere a Data na Tad escolhida
+}
+
+void importData(int choose, void * Tads[]) {
+
+}
 #endif

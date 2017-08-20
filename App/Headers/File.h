@@ -16,12 +16,11 @@
 //Assinaturas das Função de Arquivos
 
 DataNode * breakLine ( char lineInput[] ); //Função que Trata cada Linha para Inserir em um Node
-void giveFile(); //Função que recebe do usuario o nome do Arquivo
-int readFile(char output[], int choose); //Funçaõ para Ler algum Arquivo.
+void giveFile(void * Tads[]); //Função que recebe do usuario o nome do Arquivo
+int readFile(char output[], int choose, void * Tads[]); //Funçaõ para Ler algum Arquivo.
 
 //Pede ao Usuario o Nome do Arquivo e Depois Lê
-void giveFile()
-{
+void giveFile(void * Tads[]) {
 
     char FilePath[PATH];
 
@@ -30,28 +29,20 @@ void giveFile()
     showMenu(1);//Pergunbta ao Usuario qual será a Estrutura a ser Afetada
     int choose = validadeCommand(1, 4);
     if ( choose != 4 )//Pula se o usuario cancelar
-        readFile(FilePath, choose);
+        readFile(FilePath, choose, Tads);
 }
 
 //Lê o Arquivo para encaminhar as Linhas com os Dados para a Função de Criar Node
-int readFile(char output[], int choose)
-{
-	DataNode *d;
+int readFile(char output[], int choose, void * Tads[]) {
+
     FILE *ptrFile;
     char Data[SIZE];
-    List *rootList;
-    //ponteiro para árvore aqui
 
-    switch (choose) {
-        case 1:
-            rootList = (List *) Create(1);
-            break;
-        case 2:
-            // aqui vem a opção de criar árvore
-            break;
+    switch (choose) { //Somente a Lista deve ser Inicializada sem um NodeData
         case 3:
-            rootList = (List *) Create(1);
-            // aqui vem a opção de criar árvore
+        case 1:
+            if ( Tads[1] == NULL )
+                Tads[1] = Create(1, NULL);
             break;
     }
 
@@ -64,17 +55,22 @@ int readFile(char output[], int choose)
         fgets(Data, SIZE, ptrFile);//Pula a segunda Linha
         while ( !feof(ptrFile) ) {
             fgets(Data, SIZE, ptrFile);
-            d = breakLine(Data);
             switch (choose) {
                 case 1:
-                    Insert(rootList, d, 1);
+                    Insert(Tads, breakLine(Data), 1); //Insere na Lista
                     break;
                 case 2:
-                    //Insert(rootAvl, d, 0);
+                    //if ( Tads[0] == NULL ) //Se a arvore não existe cria uma Raiz e Insere os Dados
+                        //Tads[0] = Create(0, breakLine(data));
+                    //else
+                        //Insert(Tads, breakLine(Data), 0); //Insere na Arvore
                     break;
                 case 3:
-                    Insert(rootList, d, 1);
-                    //Insert(rootAvl, d, 0);
+                    Insert(Tads, breakLine(Data), 1); //Insere na Lista
+                    //if ( Tads[0] == NULL ) //Se a arvore não existe cria uma Raiz e Insere os Dados
+                        //Tads[0] = Create(0, breakLine(data));
+                    //else
+                        //Insert(Tads, breakLine(Data), 0); //Insere na Arvore
                     break;
             }
         }
@@ -86,8 +82,7 @@ int readFile(char output[], int choose)
 }
 
 //Recebe a Linha e trata para enviar para algum Node os Dados
-DataNode * breakLine ( char lineInput[] )
-{
+DataNode * breakLine ( char lineInput[] ) {
 
     DataNode * container = createData();
     int data = 0;
