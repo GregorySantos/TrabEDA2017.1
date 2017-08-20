@@ -26,7 +26,7 @@ void * Create(int type, DataNode * startData ) {
         case 1:
             return createList();
         //case 2:
-            //return InsertTree( (RootTree *) Tads[type], Data) @Função para Inserir na Arvore
+            //return InsertTree( NULL, Data) @Função para Inserir na Arvore
     }
 }
 

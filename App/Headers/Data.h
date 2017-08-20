@@ -1,6 +1,9 @@
 #ifndef DATA_INCLUDED
 #define DATA_INCLUDED
 
+//Dependências
+#include <stdio.h>
+#include <string.h>
 
 typedef struct datanode{
     int matricula;  //Armazenar a Matricula
@@ -11,7 +14,12 @@ typedef struct datanode{
     double salario; //Armazena o Salario
 }DataNode;
 
+//Assinaturas das Funções de Data
 void setFileData( char * input, DataNode * new, int data );//Vai setando o DataNode
+DataNode * createData(); //Cria uma Estrutura Data
+void FreeDataNode(DataNode *D); //Exclui completamente a Estrutura DataNode
+DataNode * setDataNode(); //Cria um DataNode individualmente
+char * createString(int sizeMax); //Helper para Criação de Strings
 
 //Vai setando o DataNode
 void setFileData( char * input, DataNode * new, int data ) {
@@ -61,8 +69,6 @@ void FreeDataNode(DataNode *D){
     free((*D).telefone);
     free(D);
 }
-
-//Importa o Conato Individualmente
 void giveData(void * Tads[]) {
 
     showMenu(1);//Pergunbta ao Usuario qual será a Estrutura a ser Afetada
@@ -71,7 +77,34 @@ void giveData(void * Tads[]) {
         importData(choose, Tads); //Insere a Data na Tad escolhida
 }
 
-void importData(int choose, void * Tads[]) {
+void importData(int choose, void * Tads[]) {//Importa o Conato Individualmente
 
+
+//Cria um DataNode Individual
+DataNode * setDataNode() {
+    DataNode * new = createData();
+    printf("Digite a Matricula: ");
+    scanf("%d", &((*new).matricula));
+    printf("Digite o Nome ( Max: 128 Caracters ): ");
+    (*new).nome = createString(128);
+    printf("Digite o Sobrenome ( Max: 512 Caracters ): ");
+    (*new).sobrenome = createString(512);
+    printf("Digite o Email ( Max: 128 Caracters ): ");
+    (*new).email = createString(128);
+    printf("Digite o telefone: ( Max: 16 Caracters ): ");
+    (*new).telefone = createString(16);
+    printf("Digite o salario: ");
+    scanf("%lf", &((*new).salario));
+
+    return new;
+}
+
+//Cria uma String no Tamanho máximo de sizeMax.
+char * createString(int sizeMax) {
+    char *string = malloc(sizeof(char) * (sizeMax + 1));
+    fgets(string, 60, stdin);
+    strtok(string, "\n");
+    string = (char *) realloc(string, strlen(string) * sizeof(char) + 1);
+    return string;
 }
 #endif
