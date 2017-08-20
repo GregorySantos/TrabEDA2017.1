@@ -10,6 +10,7 @@
 #include "Data.h"
 #include "Menu.h"
 #include "Unissex.h"
+#include "Time.h"
 
 
 //Assinaturas das Função de Arquivos
@@ -58,6 +59,7 @@ int readFile(char output[], int choose)
         printf("Erro ao Ler o Arquivo!\n");
         return 0;
     } else {
+        TimePass(0); //Começa a Cronometrar
         fgets(Data, SIZE, ptrFile);//Pula a primeira Linha
         fgets(Data, SIZE, ptrFile);//Pula a segunda Linha
         while ( !feof(ptrFile) ) {
@@ -76,8 +78,9 @@ int readFile(char output[], int choose)
                     break;
             }
         }
-
+        showTime(TimePass(1));
         fclose(ptrFile);
+
         return 1;
     }
 }
@@ -97,7 +100,6 @@ DataNode * breakLine ( char lineInput[] )
     while ( ptrData ) { //Cada palavra da Linha é um Loop
         setFileData(ptrData, container, data);//Vai setando as informações no DataNode
         data = (data + 1) % 6; //Atualiza o Data
-        printf("%s\n", ptrData);
         ptrData = strtok(NULL, ",");
     }
 
