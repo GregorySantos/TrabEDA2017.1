@@ -9,15 +9,18 @@
 
 void Delete(void *Tads[], int matricula, int type ); //Delta algum nó pela matricula
 void * Create(int type, DataNode * startData); //Cria alguma estrutura de Dado e retorna o seu ponteiro
-int Insert(void * Tads[], void * Data, int type ); //Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
+int Insert(void * Tads[], DataNode * Data, int type ); //Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
 int Update(void *Tads[], int matricula, int type ); //Retorna 0 caso não tenha algum erro de atualização
 
 //Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
-int Insert(void * Tads[], void * Data, int type ) {
+int Insert(void * Tads[], DataNode * Data, int type ) {
+    void * novo;
     switch (type) {
         case 1:
-            if ( !(InsertList( (List *) Tads[type], createNodeList((DataNode *) Data))) ) { //Comunica Erro
-                printf("\n=====Erro ao Inserir na Lista! Espaço Insuficiente ou Matrícula %d já Existente!=====\n", ((*(DataNode *) Data).matricula) );
+            novo = createNodeList(Data);
+            if ( !(InsertList( (List *) Tads[type], (NodeList *) novo) ) )       { //Comunica Erro
+                printf("\n=====Erro ao Inserir na Lista! Espaço Insuficiente ou Matrícula %d já Existente!=====\n", ((*(DataNode *) Data).matricula));
+                deleteNodeList((NodeList *) novo);
                 return 0;
             }
             return 1;
