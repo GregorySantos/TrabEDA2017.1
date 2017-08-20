@@ -56,14 +56,18 @@ int readFile(char output[], int choose, void * Tads[]) {
                         Quant++;
                     break;
                 case 2:
-                    //if ( Tads[0] == NULL ) //Se a arvore não existe cria uma Raiz e Insere os Dados
+                    //if ( Tads[0] == NULL ){ //Se a arvore não existe cria uma Raiz e Insere os Dados
                         //Tads[0] = Create(0, breakLine(data));
-                    //else
+                        //Quant++;
+                    //}else{
                         //Insert(Tads, breakLine(Data), 0); //Insere na Arvore
+                        //Quant++;
+                    //}
                     break;
             }
         }
         showTime(TimePass(1));
+        printf("\n\n***** Quantidade de Dados Importados: %d *****\n\n", Quant);
         fclose(ptrFile);
 
         return 1;
