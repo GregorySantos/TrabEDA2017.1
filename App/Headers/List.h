@@ -1,6 +1,9 @@
 #ifndef LIST_INCLUDED
 #define LIST_INCLUDED
 
+//dependências
+#include <strings.h>
+
 //Estruturas Definidas
 
 typedef struct nodeList {
