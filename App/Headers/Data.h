@@ -14,7 +14,12 @@ typedef struct datanode{
     double salario; //Armazena o Salario
 }DataNode;
 
+//Assinaturas das Funções de Data
 void setFileData( char * input, DataNode * new, int data );//Vai setando o DataNode
+DataNode * createData(); //Cria uma Estrutura Data
+void FreeDataNode(DataNode *D); //Exclui completamente a Estrutura DataNode
+DataNode * setDataNode(); //Cria um DataNode individualmente
+char * createString(int sizeMax); //Helper para Criação de Strings
 
 //Vai setando o DataNode
 void setFileData( char * input, DataNode * new, int data ) {
@@ -79,7 +84,7 @@ DataNode * setDataNode() {
     printf("Digite o telefone: ( Max: 16 Caracters ): ");
     (*new).telefone = createString(16);
     printf("Digite o salario: ");
-    scanf("%f", &((*new).salario));
+    scanf("%lf", &((*new).salario));
 
     return new;
 }
