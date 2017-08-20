@@ -1,6 +1,9 @@
 #ifndef LIST_INCLUDED
 #define LIST_INCLUDED
 
+//dependências
+#include <strings.h>
+
 //Estruturas Definidas
 
 typedef struct nodeList {
@@ -19,6 +22,7 @@ NodeList * createNodeList(DataNode *d);//cria um novo nó
 int removeNode(List* L, int mat);//remove um nó pela matrícula
 NodeList * buscaMatricula ( int inputMatricula, List * root );//Função para Busca por Matricula em Lista
 int InsertList(List *L, NodeList *NewNode); //Função para inserir um nó na lista, ordenado pela matrícula
+NodeList * buscaNome(List *L, char *n, char *sn); //função busca um nó na lista pelo nome e sobrenome, e retorna um ponteiro pro nó
 
 //Função que Aloca um Espaço para criar a Lista e Retorna o Ponteiro da Lista
 List * createList()
@@ -117,6 +121,23 @@ int removeNode(List* L, int mat){
     FreeDataNode(node->data);
     free(node);
     return 1;
+}
+
+//função busca um nó na lista pelo nome e sobrenome, e retorna um ponteiro pro nó
+NodeList * buscaNome(List *L, char *n, char *sn){
+    if( L == NULL || L->next == NULL)
+        return NULL;
+
+    NodeList *aux = L->next;
+
+    while((strcasecmp(n, aux->data->nome) != 0) || (strcasecmp(sn, aux->data->sobrenome) != 0)  && aux->next != NULL){
+        aux = aux->next;
+    }
+
+    if(aux->next == NULL && (strcasecmp(n, aux->data->nome) != 0) || (strcasecmp(sn, aux->data->sobrenome) != 0))
+        return NULL;
+    else
+        return aux;
 }
 
 //Fim das Funções de Lista
