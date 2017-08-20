@@ -51,6 +51,7 @@ int validadeCommand(int start, int end) {
 
     printf("Digite o comando: ");
     scanf("%d", &res);
+    getchar();
 
     while ( res < start || res > end ) {
         printf("Comando não identificado! Por favor, digite novamente: ");
@@ -73,6 +74,8 @@ void showMenu(int level) {
         case 2:
             printf("Como deseja Editar?\n\n1 - Excluir\n2 - Atualizar\n3 - Voltar\n\n");
             break;
+        case 3:
+            printf("Qual dado deseja Editar?\n\n1 - Nome\n2 - Sobrenome\n3 - Email\n4 - Salario\n5 - Voltar\n");
     }
 }
 
@@ -124,12 +127,26 @@ void giveDelete(void * Tads[], int choose) {
 //Recebe a Escolha de Qual TAD irá atualizar dados
 void giveUpdate (void * Tads[], int choose) {
 
+    int matricula;
+
+    printf("Digite a Matricula: ");
+    scanf("%d", &matricula);
+    getchar();
+
     switch (choose) {
-        case 1://Caso escolha Ataualizar da Lista
+        case 1://Caso escolha Atualizar da Lista
+            if ( !(Update(Tads, matricula, 1)) ) {
+                printf("\n=====Erro na busca da Matrícula! Lista ou Matrícula %d não Existe!=====\n", matricula);
+            }
             break;
         case 2://Caso escolha Atualizar da Arvore
+            //Update(Tads, matricula, 0); //Escolhe Deletar da Arvore
             break;
         case 3://Caso escolha Atualizar de Ambas
+            if ( !(Update(Tads, matricula, 1)) ) {
+                printf("\n=====Erro na busca da Matrícula! Lista ou Matrícula %d não Existe!=====\n", matricula);
+            }
+            //Update(Tads, matricula, 0); //Escolhe Deletar da Arvore
             break;
     }
 }

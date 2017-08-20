@@ -2,6 +2,7 @@
 #define UNISSEX_INCLUDED
 
 //Dependências
+#include "Time.h"
 #include "Data.h"
 #include "Tree.h"
 #include "List.h"
@@ -9,6 +10,7 @@
 void Delete(void *Tads[], int matricula, int type ); //Delta algum nó pela matricula
 void * Create(int type, DataNode * startData); //Cria alguma estrutura de Dado e retorna o seu ponteiro
 void Insert(void * Tads[], void * Data, int type ); //Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
+int Update(void *Tads[], int matricula, int type ); //Retorna 0 caso não tenha algum erro de atualização
 
 //Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
 void Insert(void * Tads[], void * Data, int type ) {
@@ -47,5 +49,39 @@ void Delete(void *Tads[], int matricula, int type ) {
     }
 }
 
+//Atualiza o nó fazendo uma busca interna, retorna 0 se a matrícula passada não existe
+int Update(void *Tads[], int matricula, int type ) {
 
+    void * find;
+    showMenu(3);
+    int choose = validadeCommand(1, 5);
+
+    if (Tads[type] == NULL )//Se o Tad que será utilizado não existir, já retorna Erro
+        return 0;
+
+    while ( choose != 5 ) {
+        TimePass(0);
+        switch (type) {
+            case 1:
+                find = buscaEqualsList(matricula, Tads[type]); //Verifica se realmente a matricula existe na Lista
+                if ( find == NULL ) {
+                    showTime(TimePass(1));
+                    return 0;
+                } else
+                    editDataNode(choose, ((NodeList *) find)->data); //Função para Editar o DataNode
+                break;
+            //case 2: //Edita da Arvore
+                //find = buscaMatriculaTree(matricula, Tads[type]); //Verifica se realmente a matricula existe na Lista
+                //if ( find == NULL ) {
+                    //showTime(TimePass(1));
+                    //return 0;
+                //} else
+                    //editDataNode(choose, ((NodeTree *) find)->data)); //Função para Editar o DataNode
+        }
+        showTime(TimePass(1));
+        showMenu(3);
+        choose = validadeCommand(1, 5);
+    }
+    return 1;
+}
 #endif
