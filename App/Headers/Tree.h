@@ -1,8 +1,5 @@
 #ifndef TREE_INCLUDED
 #define TREE_INCLUDED
-#include "Data.h"
-#include <string.h>
-#include <strings.h>
 
 //estrutura de arvore que recebera os dados;
 typedef struct ArvNo{
@@ -12,6 +9,10 @@ typedef struct ArvNo{
 	int altura; //inteiro para informar a altura do no
 }*ArvNoPtr; //definindo o tipo como um ponteiro, assim, posso inicia-lo sem precisar do '*'
 
+#include "Data.h"
+#include <string.h>
+#include <strings.h>
+
 void inicializarTreeNO(ArvNoPtr *atual);
 int maximo(int i, int j);
 int pegarAltura(ArvNoPtr atual);
@@ -20,6 +21,7 @@ ArvNoPtr rotacaoDir(ArvNoPtr raiz);
 ArvNoPtr rotacaoEsq(ArvNoPtr raiz);
 ArvNoPtr BuscaArvoreMatricula(ArvNoPtr treePtr, int matricula);
 void ImpressaoArvoreOrdem(ArvNoPtr treePtr);
+void showAllTree(ArvNoPtr treePtr);
 ArvNoPtr BuscaArvoreNome(ArvNoPtr treePtr, char *n, char *sn);
 
 //funcao para alocar espaco numa estrutura de no
@@ -55,15 +57,15 @@ ArvNoPtr rotacaoDir(ArvNoPtr raiz){
 	ArvNoPtr auxEsq, auxDir;		//dois auxiliares
 	auxEsq=raiz->esqPtr;		//este recebe a esquerda do NO raiz
 	auxDir=auxEsq->dirPtr;		//este recebe a direita da esquerda do NO raiz (pode ser NULL ou nao)
-	
+
 	//faz a rotacao
 	auxEsq->dirPtr=raiz;		//sobe a esquerda da raiz para ser a nova raiz, colocando a antiga raiz na direita
 	raiz->esqPtr=auxDir;		//coloca o que estava a direita da nova raiz na esquerda da antiga raiz, para nao perder dados
-	
+
 	//atualizar a altura dos nos que tiveram modificoes nos filhos (nos que nao tiveram filhos alterador nao precisam atualizar)
 	raiz->altura=1+maximo(pegarAltura(raiz->esqPtr), pegarAltura(raiz->dirPtr));
 	auxEsq->altura=1+maximo(pegarAltura(auxEsq->esqPtr), pegarAltura(auxEsq->dirPtr));
-	
+
 	return auxEsq;		//retorna a nova raiz;
 }
 
@@ -101,13 +103,22 @@ ArvNoPtr BuscaArvoreMatricula(ArvNoPtr treePtr, int matricula){
 
 //funcao para imprimir toda a arvore por ordem da matricula
 void ImpressaoArvoreOrdem(ArvNoPtr treePtr){
-    if(treePtr != NULL){ //se a arvore nao estiver vazia, então percorra
+    if(treePtr != NULL){ //se a arvore nao estiver vazia, entï¿½o percorra
         ImpressaoArvoreOrdem(treePtr->esqPtr);
-        
+
 		showData(treePtr->dados);
-        
+
 		ImpressaoArvoreOrdem(treePtr->dirPtr);
     } // fim do if
+}
+
+//funcao de imprimir toda a arvore e avisar se estiver vazia
+void showAllTree(ArvNoPtr treePtr) {
+    if ( treePtr == NULL ) {
+        printf("Arvore Vazia!\n");
+    } else {
+        ImpressaoArvoreOrdem(treePtr);
+    }
 }
 
 //funcao para buscar elemento na arvore a partir do nome
