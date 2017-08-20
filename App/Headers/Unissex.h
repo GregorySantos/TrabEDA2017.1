@@ -29,6 +29,7 @@ int Insert(void * Tads[], DataNode * Data, int type ) {
             // Tads[0] = InsertTree( (RootTree *) Tads[type], Data) @Função para Inserir na Arvore | Tratamento de Erro Interno
             // break;
     }
+    return 0;
 }
 
 //Cria alguma estrutura de Dado e retorna o seu ponteiro
@@ -39,6 +40,7 @@ void * Create(int type, DataNode * startData ) {
         //case 2:
             //return InsertTree( NULL, Data) @Função para Inserir na Arvore
     }
+    return NULL;
 }
 
 //Deleta algum nó pela Matricula

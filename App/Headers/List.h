@@ -135,11 +135,11 @@ NodeList * buscaNomeList(List *L, char *n, char *sn){
 
     NodeList *aux = L->next;
 
-    while((strcasecmp(n, aux->data->nome) != 0) || (strcasecmp(sn, aux->data->sobrenome) != 0)  && aux->next != NULL){
+    while((strcasecmp(n, aux->data->nome) != 0) || ((strcasecmp(sn, aux->data->sobrenome) != 0)  && (aux->next != NULL)) ){
         aux = aux->next;
     }
 
-    if(aux->next == NULL && (strcasecmp(n, aux->data->nome) != 0) || (strcasecmp(sn, aux->data->sobrenome) != 0))
+    if( ((aux->next == NULL) && (strcasecmp(n, aux->data->nome) != 0)) || (strcasecmp(sn, aux->data->sobrenome) != 0))
         return NULL;
     else
         return aux;
