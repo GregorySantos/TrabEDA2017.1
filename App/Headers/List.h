@@ -173,7 +173,7 @@ void showAllList(List *L){
     NodeList *aux = L->next;
 
     while(aux != NULL){
-        printf("Matricula: %d\nNome: %s %s\nemail: %s\nTelefone: %s\nSalario: %f\n", aux->data->matricula, aux->data->nome, aux->data->sobrenome, aux->data->email, aux->data->telefone, aux->data->salario);
+        showData(aux->data);
         aux = aux->next;
     }
 

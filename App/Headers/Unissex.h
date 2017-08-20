@@ -11,6 +11,7 @@ void Delete(void *Tads[], int matricula, int type ); //Delta algum nó pela matr
 void * Create(int type, DataNode * startData); //Cria alguma estrutura de Dado e retorna o seu ponteiro
 int Insert(void * Tads[], DataNode * Data, int type ); //Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
 int Update(void *Tads[], int matricula, int type ); //Retorna 0 caso não tenha algum erro de atualização
+void Select(void *Tads[], int type, int quant );//Visualiza os dados das TADS
 
 //Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
 int Insert(void * Tads[], DataNode * Data, int type ) {
@@ -88,4 +89,64 @@ int Update(void *Tads[], int matricula, int type ) {
     }
     return 1;
 }
+
+//Visualiza os dados das TADS
+void Select(void *Tads[], int type, int quant ) {
+
+    static int matricula;
+    char *nome, *sobrenome;
+    void * res;
+
+    switch (type) {
+        case 1://Escolheu a Lista
+            switch (quant) {
+                case 1://Matricula
+                    printf("Digite a matricula: ");
+                    scanf("%d", &matricula);
+                    getchar();
+                    TimePass(0);
+                    res = buscaEqualsList(matricula, Tads[type]);
+                    if ( res != NULL ) {
+                        showData(((NodeList *) res)->data);
+                    } else {
+                        printf("Registro não encontrado!\n\n");
+                    }
+                    showTime(TimePass(1));
+                    break;
+                case 2://Nome
+                    printf("Digite o Nome ( Max: 128 Caracters ): ");
+                    nome = createString(128);
+                    printf("Digite o Sobrenome ( Max: 512 Caracters ): ");
+                    sobrenome = createString(512);
+                    TimePass(0);
+                    res = buscaNome(Tads[type], nome, sobrenome);
+                    free(nome);
+                    free(sobrenome);
+                    if ( res != NULL ) {
+                        showData(((NodeList *) res)->data);
+                    } else {
+                        printf("Registro não encontrado!\n\n");
+                    }
+                    showTime(TimePass(1));
+                    break;
+                case 3://Todos
+                    TimePass(0);
+                    showAllList(Tads[type]);
+                    showTime(TimePass(1));
+                    break;
+            }
+            break;
+        case 0://Escolheu a Arvore
+            switch (quant) {
+                case 1://Matricula
+                    break;
+                case 2://Nome
+                    break;
+                case 3://Todos
+                    break;
+            }
+            break;
+    }
+}
+
 #endif
