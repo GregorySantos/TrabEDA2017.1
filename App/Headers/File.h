@@ -3,6 +3,10 @@
 #define SIZE 100000
 #define PATH 128
 
+//Assinaturas das Função de Arquivos
+int readFile(char output[], int choose, void * Tads[]); //Funçaõ para Ler algum Arquivo.
+void giveFile(void * Tads[]); //Função que recebe do usuario o nome do Arquivo
+
 //Dependências
 #include <string.h>
 #include <stdlib.h>
@@ -12,12 +16,8 @@
 #include "Unissex.h"
 #include "Time.h"
 
-
-//Assinaturas das Função de Arquivos
-
 DataNode * breakLine ( char lineInput[] ); //Função que Trata cada Linha para Inserir em um Node
-void giveFile(void * Tads[]); //Função que recebe do usuario o nome do Arquivo
-int readFile(char output[], int choose, void * Tads[]); //Funçaõ para Ler algum Arquivo.
+
 
 //Pede ao Usuario o Nome do Arquivo e Depois Lê
 void giveFile(void * Tads[]) {
@@ -42,7 +42,7 @@ int readFile(char output[], int choose, void * Tads[]) {
         case 3:
         case 1:
             if ( Tads[1] == NULL )
-                Tads[1] = Create(1, NULL);
+                Tads[1] = (void *) Create(1, (DataNode *) NULL);
             break;
     }
 
