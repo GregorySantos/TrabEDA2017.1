@@ -22,7 +22,7 @@ NodeList * buscaMatricula ( int inputMatricula, List * root );//Função para Bu
 int InsertList(List *L, NodeList *NewNode); //Função para inserir um nó na lista, ordenado pela matrícula
 NodeList * buscaNome(List *L, char *n, char *sn); //função busca um nó na lista pelo nome e sobrenome, e retorna um ponteiro pro nó
 NodeList * buscaEqualsList(int inputMatricula, List * root ); //Função que retorna se existe a matricula exata na lista
-void printAll(List *L);
+void showAllList(List *L);
 
 //dependências
 #include "Data.h"
@@ -154,7 +154,7 @@ NodeList * buscaEqualsList(int inputMatricula, List * root ) {
         return NULL;
 }
 
-void printAll(List *L){
+void showAllList(List *L){
     if(L == NULL){
         printf("Lista nao inicializada!\n");
         return;
@@ -167,7 +167,7 @@ void printAll(List *L){
     NodeList *aux = L->next;
 
     while(aux != NULL){
-        printf("%d\n%s %s\n%s\n%s\n%f\n", aux->data->matricula, aux->data->nome, aux->data->sobrenome, aux->data->email, aux->data->telefone, aux->data->salario);
+        printf("Matricula: %d\nNome: %s %s\nemail: %s\nTelefone: %s\nSalario: %f\n", aux->data->matricula, aux->data->nome, aux->data->sobrenome, aux->data->email, aux->data->telefone, aux->data->salario);
         aux = aux->next;
     }
 
