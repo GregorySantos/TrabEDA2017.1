@@ -20,6 +20,7 @@ ArvNoPtr rotacaoDir(ArvNoPtr raiz);
 ArvNoPtr rotacaoEsq(ArvNoPtr raiz);
 ArvNoPtr BuscaArvoreMatricula(ArvNoPtr treePtr, int matricula);
 void ImpressaoArvoreOrdem(ArvNoPtr treePtr);
+ArvNoPtr BuscaArvoreNome(ArvNoPtr treePtr, char *n, char *sn);
 
 //funcao para alocar espaco numa estrutura de no
 void inicializarTreeNO(ArvNoPtr *atual){
@@ -107,6 +108,35 @@ void ImpressaoArvoreOrdem(ArvNoPtr treePtr){
         
 		ImpressaoArvoreOrdem(treePtr->dirPtr);
     } // fim do if
+}
+
+//funcao para buscar elemento na arvore a partir do nome
+//segue a ideia da impressao em ordem (esquerda, raiz, direita)
+ArvNoPtr BuscaArvoreNome(ArvNoPtr treePtr, char *n, char *sn){
+	//se estiver vazia, retorna o null
+	if(treePtr==NULL){
+		return NULL;
+	}
+	
+	ArvNoPtr aux;
+	aux=BuscaArvoreNome(treePtr->esqPtr, n, sn); //testa toda a esquerda 
+	
+	if(aux!=NULL){ //se nao retornou NULL, é porque é o elemento desejado
+		return aux;
+	}
+	
+	//testa se a raiz é o elemento desejado, se sim, retorna a raiz
+	if((strcasecmp(n, (treePtr->dados)->nome) == 0) && (strcasecmp(sn, (treePtr->dados)->sobrenome) == 0)){
+		return treePtr;
+	}
+	
+	aux=BuscaArvoreNome(treePtr->dirPtr, n, sn);//testa agora a direita
+	if(aux!=NULL){ //se nao retornou NULL, é porque é o elemento desejado
+		return aux;
+	}
+	
+	// se no final só encontrou NULL, então não encontrou o elemento, retorna NULL
+	return NULL;
 }
 
 #endif
