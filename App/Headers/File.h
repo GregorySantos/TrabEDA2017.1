@@ -86,7 +86,7 @@ int readFile(char output[], int choose)
 DataNode * breakLine ( char lineInput[] )
 {
 
-    DataNode * container = malloc(sizeof(DataNode));
+    DataNode * container = createData();
     int data = 0;
     int Quantidade; //Armazena quantos dados serão inseridos
 
