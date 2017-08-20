@@ -29,6 +29,7 @@ int Insert(void * Tads[], DataNode * Data, int type ) {
             // Tads[0] = InsertTree( (RootTree *) Tads[type], Data) @Função para Inserir na Arvore | Tratamento de Erro Interno
             // break;
     }
+    return 0;
 }
 
 //Cria alguma estrutura de Dado e retorna o seu ponteiro
@@ -39,13 +40,14 @@ void * Create(int type, DataNode * startData ) {
         //case 2:
             //return InsertTree( NULL, Data) @Função para Inserir na Arvore
     }
+    return NULL;
 }
 
 //Deleta algum nó pela Matricula
 void Delete(void *Tads[], int matricula, int type ) {
     switch (type) {
         case 1:
-            if ( !(removeNode( (List *) Tads[type], matricula)) )
+            if ( !(removeNodeList( (List *) Tads[type], matricula)) )
                 printf("\n=====Erro ao Remover da Lista! Lista ou Matrícula %d não Existe!", matricula);
             break;
         //case 0:
@@ -119,7 +121,7 @@ void Select(void *Tads[], int type, int quant ) {
                     printf("Digite o Sobrenome ( Max: 512 Caracters ): ");
                     sobrenome = createString(512);
                     TimePass(0);
-                    res = buscaNome(Tads[type], nome, sobrenome);
+                    res = buscaNomeList(Tads[type], nome, sobrenome);
                     free(nome);
                     free(sobrenome);
                     if ( res != NULL ) {
