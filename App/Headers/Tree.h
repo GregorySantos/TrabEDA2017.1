@@ -9,8 +9,16 @@ typedef struct ArvNo{
 	int altura; //inteiro para informar a altura do no
 }*ArvNoPtr; //definindo o tipo como um ponteiro, assim, posso inicia-lo sem precisar do '*'
 
+void inicializarTreeNO(ArvNoPtr *atual);
+int maximo(int i, int j);
+int pegarAltura(ArvNoPtr atual);
+int fatorBalanceamento(ArvNoPtr raiz);
+ArvNoPtr rotacaoDir(ArvNoPtr raiz);
+ArvNoPtr rotacaoEsq(ArvNoPtr raiz);
+DataNodePtr BuscaArvoreMatricula(ArvNoPtr treePtr, int matricula);
+
 //funcao para alocar espaco numa estrutura de no
-void inicializarNO(ArvNoPtr *atual){
+void inicializarTreeNO(ArvNoPtr *atual){
 	(*atual)=(struct ArvNo *)malloc(sizeof(struct ArvNo));
 }
 
@@ -71,5 +79,19 @@ ArvNoPtr rotacaoEsq(ArvNoPtr raiz){
 	return auxDir;		//retorna a nova raiz;
 }
 
+//funcao para retornar um no a partir da matricula
+DataNodePtr BuscaArvoreMatricula(ArvNoPtr treePtr, int matricula){
+    if(treePtr!=NULL){
+        if(matricula==(treePtr->dados)->matricula){
+            return treePtr->dados;
+        }else if(matricula<(treePtr->dados)->matricula){
+            return existeNo(treePtr->esqPtr, matricula);
+        }else{
+            return existeNo(treePtr->dirPtr, matricula);
+        }
+    }else{
+        return NULL;
+    }
+}
 
 #endif
