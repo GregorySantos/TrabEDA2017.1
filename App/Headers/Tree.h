@@ -10,6 +10,19 @@ typedef struct ArvNo{
 	int altura; //inteiro para informar a altura do no
 }*ArvNoPtr; //definindo o tipo como um ponteiro, assim, posso inicia-lo sem precisar do '*'
 
+//bloco para os cabecalhos das funoes:
+void inicializarNO(ArvNoPtr *atual);
+int maximo(int i, int j);
+int pegarAltura(ArvNoPtr atual);
+ArvNoPtr criarNo(DataNodePtr dados);
+int fatorBalanceamento(ArvNoPtr raiz);
+ArvNoPtr rotacaoDir(ArvNoPtr raiz);
+ArvNoPtr rotacaoEsq(ArvNoPtr raiz);
+ArvNoPtr inserirNo(ArvNoPtr atual, DataNodePtr dadosPtr);
+ArvNoPtr menor_dosMaiores(ArvNoPtr treePtr);
+int existeNo(ArvNoPtr treePtr, int matricula);
+ArvNoPtr delecaoArvore(ArvNoPtr treePtr, int matricula);
+
 //funcao para alocar espaco numa estrutura de no
 void inicializarNO(ArvNoPtr *atual){
 	(*atual)=(struct ArvNo *)malloc(sizeof(struct ArvNo));
@@ -122,6 +135,86 @@ ArvNoPtr inserirNo(ArvNoPtr atual, DataNodePtr dadosPtr){
 	}else{
 		printf("Conteudo nao inserido pois a memoria esta cheia!\n");//caso nao consiga espaco na memoria, imprime a mensagem de erro
 	}
+}
+
+//funcao para achar o menor no da direita
+ArvNoPtr menor_dosMaiores(ArvNoPtr treePtr){
+	while(treePtr->esqPtr!=NULL){
+		treePtr=treePtr->esqPtr;
+	}
+	return treePtr;
+}
+
+//funcao para verificar se existe o no que quer deletar
+int existeNo(ArvNoPtr treePtr, int matricula){
+    if(treePtr!=NULL){
+        if(matricula==(treePtr->dados)->matricula){
+            return 1;
+        }else if(matricula<(treePtr->dados)->matricula){
+            existeNo(treePtr->esqPtr, matricula);
+        }else{
+            existeNo(treePtr->dirPtr, matricula);
+        }
+    }else{
+        return 0;
+    }
+}
+
+//funcao de delecoa de arvore
+ArvNoPtr delecaoArvore(ArvNoPtr treePtr, int matricula){
+    if(existeNo(treePtr, matricula)){
+        ArvNoPtr temporario;
+        if(matricula==(treePtr->dados)->matricula){
+            if(treePtr->esqPtr==NULL && treePtr->dirPtr==NULL){
+                free(treePtr);
+                return NULL;
+            }else if(treePtr->esqPtr!=NULL && treePtr->dirPtr==NULL){
+                temporario=treePtr->esqPtr;
+                free(treePtr);
+                return temporario;
+            }else if(treePtr->esqPtr==NULL && treePtr->dirPtr!=NULL){
+                temporario=treePtr->dirPtr;
+                free(treePtr);
+                return temporario;
+            }else{
+            	ArvNoPtr maiorno=menor_dosMaiores(treePtr->dirPtr);
+            	treePtr->dados=maiorno->dados;
+            	treePtr->dirPtr=delecaoArvore(treePtr->dirPtr, (maiorno->dados)->matricula);
+            	return treePtr;
+            }
+        }else if(matricula<(treePtr->dados)->matricula){
+            treePtr->esqPtr=delecaoArvore(treePtr->esqPtr, matricula);
+        }else{
+            treePtr->dirPtr=delecaoArvore(treePtr->dirPtr, matricula);
+        }
+        
+        if(treePtr==NULL){
+        	return treePtr;
+		}
+		
+		treePtr->altura=1+maximo(pegarAltura(treePtr->esqPtr), pegarAltura(treePtr->dirPtr));		//atualiza a altura de um no
+
+		//aqui o bloco para balancear a arvore
+		int balanco;
+		balanco=fatorBalanceamento(treePtr);		//descobre o fator de balanceamento deste no da arvore
+		
+		if((balanco > 1 ) && (fatorBalanceamento(treePtr->esqPtr)>=0)){//se esta desbalanceado para esq e seu filho esquerdo tambem
+			return rotacaoDir(treePtr);		//rotaciona para a direita
+		}else if((balanco < -1 ) && (fatorBalanceamento(treePtr->dirPtr)<=0)){//se esta desbalanceado para dir e seu filho direito tambem
+			return rotacaoEsq(treePtr);		//rotaciona para a esquerda
+		}else if((balanco > 1 ) && (fatorBalanceamento(treePtr->esqPtr)<0)){//se esta desbalanceado para esq e seu filho esquerdo pela dir
+			treePtr->esqPtr=rotacaoEsq(treePtr->esqPtr);		//rotaciona a esquerda para arrumar o NO
+			return rotacaoDir(treePtr);		//rotaciona a direita para enfim balancear
+		}else if((balanco < -1 ) && (fatorBalanceamento(treePtr->dirPtr)>0)){//se esta desbalanceado para dir e seu filho direito pela esq
+			treePtr->dirPtr=rotacaoDir(treePtr->dirPtr);		//rotaciona a direita para attumar o NO
+			return rotacaoEsq(treePtr);		//rotaciona a esquerda para enfim balancear
+		}
+		//se nao houver nenhum desbalanceamento:
+		return treePtr;
+    }else{
+        printf("Nao existe esse no para excluir\n");
+        return treePtr;
+    }
 }
 
 #endif
