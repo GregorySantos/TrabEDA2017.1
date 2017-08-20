@@ -159,11 +159,11 @@ void Select(void *Tads[], int type, int quant ) {
                     printf("Digite o Sobrenome ( Max: 512 Caracters ): ");
                     sobrenome = createString(512);
                     TimePass(0);
-                    res = BuscaArvoreNome(Tads[type], nome, sobrenome);
+                    res = BuscaArvoreNome((ArvNoPtr) Tads[type], nome, sobrenome);
                     free(nome);
                     free(sobrenome);
                     if ( res != NULL ) {
-                        showData(((NodeList *) res)->data);
+                        showData(((ArvNoPtr) res)->dados);
                     } else {
                         printf("Registro não encontrado!\n\n");
                     }
