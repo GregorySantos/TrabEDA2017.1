@@ -48,4 +48,8 @@ void setFileData( char * input, DataNode * new, int data ) {
     }
 }
 
+//Cria uma Estrutura Data
+DataNode * createData() {
+    return malloc(sizeof(DataNode));
+}
 #endif
