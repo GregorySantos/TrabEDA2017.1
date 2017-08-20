@@ -115,6 +115,7 @@ int removeNode(List* L, int mat){
         node->next->back = node->back;
 
     L->size--; //decrementa o tamanho da lista
+    FreeDataNode(node->data);
     free(node);
     return 1;
 }
