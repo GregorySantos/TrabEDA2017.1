@@ -16,19 +16,19 @@ typedef struct headList {
 
 
 List * createList(); //Cria, Inicializa e Retorna um Ponteiro para uma Lista
-NodeList * createNodeList(DataNode *d);//cria um novo nó
 int removeNodeList(List* L, int mat);//remove um nó pela matrícula
 NodeList * buscaMatriculaList ( int inputMatricula, List * root );//Função para Busca por Matricula em Lista
 int InsertList(List *L, NodeList *NewNode); //Função para inserir um nó na lista, ordenado pela matrícula
 NodeList * buscaNomeList(List *L, char *n, char *sn); //função busca um nó na lista pelo nome e sobrenome, e retorna um ponteiro pro nó
 NodeList * buscaEqualsList(int inputMatricula, List * root ); //Função que retorna se existe a matricula exata na lista
-void deleteNodeList(NodeList * input); //Remove Node de Lista
 void showAllList(List *L);
 
 //dependências
 #include "Data.h"
 #include <strings.h>
 
+NodeList * createNodeList(DataNode *d);//cria um novo nó
+void deleteNodeList(NodeList * input); //Remove Node de Lista
 
 //Função que Aloca um Espaço para criar a Lista e Retorna o Ponteiro da Lista
 List * createList()
