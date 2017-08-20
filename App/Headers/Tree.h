@@ -1,5 +1,6 @@
 #ifndef TREE_INCLUDED
 #define TREE_INCLUDED
+#include <Data.h>
 
 //estrutura de arvore que recebera os dados;
 typedef struct ArvNo{
@@ -9,15 +10,10 @@ typedef struct ArvNo{
 	int altura; //inteiro para informar a altura do no
 }*ArvNoPtr; //definindo o tipo como um ponteiro, assim, posso inicia-lo sem precisar do '*'
 
-//funcao para alocar espaco numa estrutura dos dados
-void inicializarDados(DataNodePtr *dados){
-	(*dados)=(struct datanode *)malloc(sizeof(struct datanode));
-}
-
 //funcao para alocar espaco numa estrutura de no
 void inicializarNO(ArvNoPtr *atual){
 	(*atual)=(struct ArvNo *)malloc(sizeof(struct ArvNo));
-	inicializarDados(&(*atual)->dados);
+	(*atual)->dados=createData();
 }
 
 //funcao para pegar o maior valor entre dois inteiros
