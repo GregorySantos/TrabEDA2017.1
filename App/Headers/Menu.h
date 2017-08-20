@@ -76,6 +76,7 @@ void showMenu(int level) {
             break;
         case 3:
             printf("Qual dado deseja Editar?\n\n1 - Nome\n2 - Sobrenome\n3 - Email\n4 - Salario\n5 - Voltar\n");
+            break;
     }
 }
 
