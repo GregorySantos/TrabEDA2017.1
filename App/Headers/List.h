@@ -103,7 +103,7 @@ NodeList * buscaMatricula( int inputMatricula, List * root ) {
         return res;
 }
 
-//função que remove um nó da lista, dada a matricula
+//função que remove um nó da lista, dada a matricula ( Retorna 0 caso lista não existe ou matrícula não existe )
 int removeNode(List* L, int mat){
     NodeList *node = buscaMatricula(mat, L);
 
