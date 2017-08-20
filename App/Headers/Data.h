@@ -11,4 +11,6 @@ typedef struct datanode{
     double salario; //Armazena o Salario
 }DataNode;
 
+typedef DataNode *DataNodePtr; //declarando a estrutura de dados como ponteiro
+
 #endif
