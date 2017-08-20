@@ -11,8 +11,6 @@ typedef struct datanode{
     double salario; //Armazena o Salario
 }DataNode;
 
-typedef DataNode *DataNodePtr; //declarando a estrutura de dados como ponteiro
-
 void setFileData( char * input, DataNode * new, int data );//Vai setando o DataNode
 
 //Vai setando o DataNode
