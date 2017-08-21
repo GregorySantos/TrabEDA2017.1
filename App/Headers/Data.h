@@ -145,7 +145,6 @@ DataNode * PresetDataNode(DataNode *preSet) {
     (*new).email = PreCreateString((*preSet).email);
     (*new).telefone = PreCreateString((*preSet).email);
     (*new).salario = (*preSet).salario;
-    getchar();
 
     return new;
 }
