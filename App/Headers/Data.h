@@ -39,8 +39,8 @@ void setFileData( char * input, DataNode * new, int data ) {
         case 2://Caso seja Uma String
         case 3://Caso seja uma String
         case 4://Caso seja uma String
-            text = (char*) malloc(sizeof(char) * strlen(input));
-            strncpy(text, input, strlen(input));
+            text = (char*) malloc(sizeof(char) * strlen(input) + 1);
+            strncpy(text, input, strlen(input) + 1);
             switch (data) {//Verfica que da do Tipo String será passado
                 case 1://Caso seja o nome
                     (*new).nome = text;
