@@ -169,7 +169,7 @@ void giveData(void * Tads[]) {//Vai setar um Nó em alguma Estrutura Individualm
 }
 
 void showData(DataNode * data) {//Exibe o DataNode
-    printf("\n=====\nMatricula: %d\nNome: %s %s\nemail: %s\nTelefone: %s\nSalario: %f\n=====\n", data->matricula, data->nome, data->sobrenome, data->email, data->telefone, data->salario);
+    printf("\n=====\nMatricula: %d\nNome: %s %s\nE-Mail: %s\nTelefone: %s\nSalario: %.2f\n=====\n", data->matricula, data->nome, data->sobrenome, data->email, data->telefone, data->salario);
 }
 
 #endif
