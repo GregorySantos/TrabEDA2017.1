@@ -63,8 +63,8 @@ int readFile(char output[], int choose, void * Tads[]) {
                         else
                             printf("Espaço Insuficiente!\n");
                     } else {
-                        Insert(Tads, breakLine(Data), 0); //Insere na Arvore
-                        Quant++;
+                        if ( Insert(Tads, breakLine(Data), 0) ) //Insere na Arvore
+                            Quant++;
                     }
                     break;
             }

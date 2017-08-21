@@ -26,11 +26,17 @@ int Insert(void * Tads[], DataNode * Data, int type ) {
             }
             return 1;
         case 0:
-            Tads[0] = InserirNaArvore((ArvNoPtr) Tads[0], Data);
-            if ( Tads[0] == NULL ) {
-                printf("\n=====Erro ao Inserir na Arvore! Espaço Insuficiente!=====\n");
+            if ( BuscaArvoreMatricula(Tads[type], Data->matricula) == NULL ){
+                Tads[type] = InserirNaArvore((ArvNoPtr) Tads[type], Data);
+                if ( Tads[type] == NULL ) {
+                    printf("\n=====Erro ao Inserir na Arvore! Espaço Insuficiente!=====\n");
+                }
+                return 1;
+            } else {
+                printf("\n=====Erro ao Inserir na Arvore! Espaço Insuficiente ou Matrícula %d já Existente!=====\n", ((*(DataNode *) Data).matricula));
+                FreeDataNode(Data);
+                return 0;
             }
-            return 1;
             break;
     }
     return 0;
