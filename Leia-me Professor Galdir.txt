@@ -1,0 +1,6 @@
+Equipe:
+Matheus Freitas
+Gregory Santos
+Lucas Natanael
+
+Para executar: compilar o Index.C que está dentro da pasta APP, ou usar o .exe que também está nesta pasta!
