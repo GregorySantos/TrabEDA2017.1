@@ -45,6 +45,8 @@ List * createList()
 }
 
 NodeList * createNodeList(DataNode *d){
+	if(d == NULL)
+		return NULL;
     NodeList *node = (NodeList*) malloc(sizeof(NodeList));
     if(node != NULL){
         node->data = d;
