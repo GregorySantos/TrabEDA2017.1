@@ -63,7 +63,7 @@ int readFile(char output[], int choose, void * Tads[]) {
                         if ( Tads[0] != NULL )
                             Quant++;
                         else
-                            printf("Espaço Insuficiente!\n");
+                            printf("Espaco Insuficiente!\n");
                     } else {
                         if ( Insert(Tads, breakLine(Data), 0) ) //Insere na Arvore
                             Quant++;

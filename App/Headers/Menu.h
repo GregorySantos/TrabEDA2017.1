@@ -68,10 +68,10 @@ void showMenu(int level) {
 
     switch ( level ) {
         case 0:
-            printf("Lista de Opções: \n\n1 - Importar Arquivo CSV\n2 - Importar Dados\n3 - Editar Dados\n4 - Visualizar Dados\n5 - Sair\n\n");
+            printf("Lista de Opcoes: \n\n1 - Importar Arquivo CSV\n2 - Importar Dados\n3 - Editar Dados\n4 - Visualizar Dados\n5 - Sair\n\n");
             break;
         case 1:
-            printf("Qual Estrutura deseja utilizar? \n\n1 - Lista Duplamente Encadeada\n2 - Árvore AVL\n3 - Voltar\n\n");
+            printf("Qual Estrutura deseja utilizar? \n\n1 - Lista Duplamente Encadeada\n2 - Arvore AVL\n3 - Voltar\n\n");
             break;
         case 2:
             printf("Como deseja Editar?\n\n1 - Excluir\n2 - Atualizar\n3 - Voltar\n\n");
@@ -136,7 +136,7 @@ void giveUpdate (void * Tads[], int choose) {
     switch (choose) {
         case 1://Caso escolha Atualizar da Lista
             if ( !(Update(Tads, matricula, 1)) ) {
-                printf("\n=====Erro na busca da Matrícula! Lista ou Matrícula %d não Existe!=====\n", matricula);
+                printf("\n=====Erro na busca da Matricula! Lista ou Matricula %d nao Existe!=====\n", matricula);
             }
             break;
         case 2://Caso escolha Atualizar da Arvore
