@@ -118,7 +118,7 @@ void giveDelete(void * Tads[], int choose) {
             break;
         case 2://Caso escolha Deletar da Arvore
             TimePass(0);
-            //Delete(Tads, matricula, 0); //Escolhe Deletar da Arvore
+            Delete(Tads, matricula, 0); //Escolhe Deletar da Arvore
             showTime(TimePass(1));
             break;
     }
