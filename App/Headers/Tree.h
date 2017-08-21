@@ -235,52 +235,47 @@ ArvNoPtr menor_dosMaiores(ArvNoPtr treePtr){
 
 //funcao de delecoa de arvore
 ArvNoPtr DelecaoArvore(ArvNoPtr treePtr, int matricula){
-    if(BuscaArvoreMatricula(treePtr, matricula)!=NULL){
-        ArvNoPtr temporario;
-        if(matricula==(treePtr->dados)->matricula){
+    ArvNoPtr temporario;
+    if(matricula==(treePtr->dados)->matricula){
 
-            if(treePtr->esqPtr==NULL && treePtr->dirPtr==NULL){
-            	FreeDataNode(treePtr->dados);
-                free(treePtr);
-                return NULL;
+        if(treePtr->esqPtr==NULL && treePtr->dirPtr==NULL){
+            FreeDataNode(treePtr->dados);
+            free(treePtr);
+            return NULL;
 
-            }else if(treePtr->esqPtr!=NULL && treePtr->dirPtr==NULL){
-                temporario=treePtr->esqPtr;
-                FreeDataNode(treePtr->dados);
-                free(treePtr);
-                return temporario;
+        }else if(treePtr->esqPtr!=NULL && treePtr->dirPtr==NULL){
+            temporario=treePtr->esqPtr;
+            FreeDataNode(treePtr->dados);
+            free(treePtr);
+            return temporario;
 
-            }else if(treePtr->esqPtr==NULL && treePtr->dirPtr!=NULL){
-                temporario=treePtr->dirPtr;
-                FreeDataNode(treePtr->dados);
-                free(treePtr);
-                return temporario;
+        }else if(treePtr->esqPtr==NULL && treePtr->dirPtr!=NULL){
+            temporario=treePtr->dirPtr;
+            FreeDataNode(treePtr->dados);
+            free(treePtr);
+            return temporario;
 
-            }else{
-            	ArvNoPtr maiorno=menor_dosMaiores(treePtr->dirPtr);
-            	FreeDataNode(treePtr->dados);
-            	treePtr->dados=copyData(maiorno->dados);
-            	treePtr->dirPtr=DelecaoArvore(treePtr->dirPtr, (maiorno->dados)->matricula);
-            	return treePtr;
-            }
-        }else if(matricula<(treePtr->dados)->matricula){
-            treePtr->esqPtr=DelecaoArvore(treePtr->esqPtr, matricula);
         }else{
-            treePtr->dirPtr=DelecaoArvore(treePtr->dirPtr, matricula);
+            ArvNoPtr maiorno=menor_dosMaiores(treePtr->dirPtr);
+            FreeDataNode(treePtr->dados);
+            treePtr->dados=copyData(maiorno->dados);
+            treePtr->dirPtr=DelecaoArvore(treePtr->dirPtr, (maiorno->dados)->matricula);
+            return treePtr;
         }
-
-        if(treePtr==NULL){
-        	return treePtr;
-		}
-
-		treePtr->altura=1+maximo(pegarAltura(treePtr->esqPtr), pegarAltura(treePtr->dirPtr));	//atualiza a altura de um no
-		treePtr=BalancearArvore(treePtr);	//chama a funcao de balancear a arvore
-
-		return treePtr;	//retorna a raiz
-
+    }else if(matricula<(treePtr->dados)->matricula){
+        treePtr->esqPtr=DelecaoArvore(treePtr->esqPtr, matricula);
     }else{
-        return treePtr;
+        treePtr->dirPtr=DelecaoArvore(treePtr->dirPtr, matricula);
     }
+
+    if(treePtr==NULL){
+        return treePtr;
+	}
+
+	treePtr->altura=1+maximo(pegarAltura(treePtr->esqPtr), pegarAltura(treePtr->dirPtr));	//atualiza a altura de um no
+	treePtr=BalancearArvore(treePtr);	//chama a funcao de balancear a arvore
+
+	return treePtr;	//retorna a raiz
 }
 
 #endif
