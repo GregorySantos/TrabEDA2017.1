@@ -27,7 +27,7 @@ ArvNoPtr BalancearArvore(ArvNoPtr treePtr);
 ArvNoPtr InserirNaArvore(ArvNoPtr treePtr, DataNode *data);
 ArvNoPtr menor_dosMaiores(ArvNoPtr treePtr);
 ArvNoPtr DelecaoArvore(ArvNoPtr treePtr, int matricula);
-ArvNoPtr CopiarDados(ArvNoPtr treePtr, ArvNoPtr aux);
+ArvNoPtr CopyNodeTree(ArvNoPtr treePtr, ArvNoPtr aux);
 
 //funcao para alocar espaco numa estrutura de no
 void inicializarTreeNO(ArvNoPtr *atual){
@@ -144,86 +144,86 @@ ArvNoPtr BuscaArvoreNome(ArvNoPtr treePtr, char *n, char *sn){
 	if(treePtr==NULL){
 		return NULL;
 	}
-	
+
 	ArvNoPtr aux;
-	aux=BuscaArvoreNome(treePtr->esqPtr, n, sn); //testa toda a esquerda 
-	
-	if(aux!=NULL){ //se nao retornou NULL, é porque é o elemento desejado
+	aux=BuscaArvoreNome(treePtr->esqPtr, n, sn); //testa toda a esquerda
+
+	if(aux!=NULL){ //se nao retornou NULL, ï¿½ porque ï¿½ o elemento desejado
 		return aux;
 	}
-	
-	//testa se a raiz é o elemento desejado, se sim, retorna a raiz
+
+	//testa se a raiz ï¿½ o elemento desejado, se sim, retorna a raiz
 	if((strcasecmp(n, (treePtr->dados)->nome) == 0) && (strcasecmp(sn, (treePtr->dados)->sobrenome) == 0)){
 		return treePtr;
 	}
-	
+
 	aux=BuscaArvoreNome(treePtr->dirPtr, n, sn);//testa agora a direita
-	if(aux!=NULL){ //se nao retornou NULL, é porque é o elemento desejado
+	if(aux!=NULL){ //se nao retornou NULL, ï¿½ porque ï¿½ o elemento desejado
 		return aux;
 	}
-	
-	// se no final só encontrou NULL, então não encontrou o elemento, retorna NULL
+
+	// se no final sï¿½ encontrou NULL, entï¿½o nï¿½o encontrou o elemento, retorna NULL
 	return NULL;
 }
 
 ArvNoPtr BalancearArvore(ArvNoPtr treePtr){
-	
+
 	int balanco=fatorBalanceamento(treePtr);
-	
+
 	if((balanco > 1) && (fatorBalanceamento(treePtr->esqPtr) >= 0)){//se esta desbalanceado para esq e seu filho esquerdo tambem
 		return rotacaoDir(treePtr);		//rotaciona para a direita
 	}
-	
+
 	if((balanco < -1) && (fatorBalanceamento(treePtr->dirPtr) <= 0)){//se esta desbalanceado para dir e seu filho direito tambem
 		return rotacaoEsq(treePtr);		//rotaciona para a esquerda
 	}
-	
+
 	if((balanco > 1) && (fatorBalanceamento(treePtr->esqPtr) < 0)){//se esta desbalanceado para esq e seu filho esquerdo pela dir
 		treePtr->esqPtr=rotacaoEsq(treePtr->esqPtr);		//rotaciona a esquerda para arrumar o NO
 		return rotacaoDir(treePtr);		//rotaciona a direita para enfim balancear
 	}
-	
+
 	if((balanco < -1) && (fatorBalanceamento(treePtr->dirPtr) > 0)){//se esta desbalanceado para dir e seu filho direito pela esq
 		treePtr->dirPtr=rotacaoDir(treePtr->dirPtr);		//rotaciona a direita para attumar o NO
 		return rotacaoEsq(treePtr);		//rotaciona a esquerda para enfim balancear
 	}
-	
+
 	//se nao houver nenhum desbalanceamento:
-	return treePtr;	
+	return treePtr;
 }
 
 //funcao para inserir os elementos na arvore em ordem de matricula
 ArvNoPtr InserirNaArvore(ArvNoPtr treePtr, DataNode *data){
-	
+
 	//se os dados foram NULL, nao ha o que ser inserido, retorna a raiz normalmente
 	if(data==NULL){
 		printf("\nNao ha dados para inserir\n");
 		return treePtr;
 	}
-	
+
 	//se a raiz for nula, ele recebera os dados
 	if(treePtr==NULL){
 		treePtr=criarArvoreNo();
 		treePtr->dados=data;
 		return treePtr;
 	}
-	
+
 	//se a matricula ja existir, nao e inserido e retorna a raiz original
 	if((treePtr->dados)->matricula == data->matricula){
 		printf("\nMatricula repetida, cadastro nao inserido\n");	//se a matricula for repetida, nao e inserida
 		return treePtr;
 	}
-	
-	//se chegar aqui, a matricula deverá ir para a esquerda ou direita
+
+	//se chegar aqui, a matricula deverï¿½ ir para a esquerda ou direita
 	if(data->matricula > (treePtr->dados)->matricula){
 		treePtr->dirPtr=InserirNaArvore(treePtr->dirPtr, data);	//dispara recursivamente para a direita
 	}else{
 		treePtr->esqPtr=InserirNaArvore(treePtr->esqPtr, data);	//dispara recursivamente para a esquerda
 	}
-	
+
 	treePtr->altura=1+maximo(pegarAltura(treePtr->esqPtr), pegarAltura(treePtr->dirPtr));	//atualiza a altura de um no da arvore
 	treePtr=BalancearArvore(treePtr);	//chama a funcao de balancear a arvore
-	
+
 	return treePtr;	//retorna a raiz
 }
 
@@ -234,7 +234,7 @@ ArvNoPtr menor_dosMaiores(ArvNoPtr treePtr){
 	return treePtr;
 }
 
-ArvNoPtr CopiarDados(ArvNoPtr treePtr, ArvNoPtr aux){
+ArvNoPtr CopyNodeTree(ArvNoPtr treePtr, ArvNoPtr aux){
 	treePtr->dados->matricula=aux->dados->matricula;
 	strcpy(treePtr->dados->nome, aux->dados->nome);
 	strcpy(treePtr->dados->sobrenome, aux->dados->sobrenome);
@@ -249,27 +249,27 @@ ArvNoPtr DelecaoArvore(ArvNoPtr treePtr, int matricula){
     if(BuscaArvoreMatricula(treePtr, matricula)!=NULL){
         ArvNoPtr temporario;
         if(matricula==(treePtr->dados)->matricula){
-        	
+
             if(treePtr->esqPtr==NULL && treePtr->dirPtr==NULL){
             	FreeDataNode(treePtr->dados);
                 free(treePtr);
                 return NULL;
-                
+
             }else if(treePtr->esqPtr!=NULL && treePtr->dirPtr==NULL){
                 temporario=treePtr->esqPtr;
                 FreeDataNode(treePtr->dados);
                 free(treePtr);
                 return temporario;
-                
+
             }else if(treePtr->esqPtr==NULL && treePtr->dirPtr!=NULL){
                 temporario=treePtr->dirPtr;
                 FreeDataNode(treePtr->dados);
                 free(treePtr);
                 return temporario;
-                
+
             }else{
             	ArvNoPtr maiorno=menor_dosMaiores(treePtr->dirPtr);
-            	treePtr=CopiarDados(treePtr, maiorno);
+            	treePtr=CopyNodeTree(treePtr, maiorno);
             	treePtr->dirPtr=DelecaoArvore(treePtr->dirPtr, (maiorno->dados)->matricula);
             	return treePtr;
             }
@@ -278,16 +278,16 @@ ArvNoPtr DelecaoArvore(ArvNoPtr treePtr, int matricula){
         }else{
             treePtr->dirPtr=DelecaoArvore(treePtr->dirPtr, matricula);
         }
-        
+
         if(treePtr==NULL){
         	return treePtr;
 		}
-		
+
 		treePtr->altura=1+maximo(pegarAltura(treePtr->esqPtr), pegarAltura(treePtr->dirPtr));	//atualiza a altura de um no
 		treePtr=BalancearArvore(treePtr);	//chama a funcao de balancear a arvore
-	
+
 		return treePtr;	//retorna a raiz
-		
+
     }else{
         return treePtr;
     }
