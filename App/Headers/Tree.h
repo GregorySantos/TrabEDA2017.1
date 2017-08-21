@@ -23,10 +23,23 @@ ArvNoPtr BuscaArvoreMatricula(ArvNoPtr treePtr, int matricula);
 void ImpressaoArvoreOrdem(ArvNoPtr treePtr);
 void showAllTree(ArvNoPtr treePtr);
 ArvNoPtr BuscaArvoreNome(ArvNoPtr treePtr, char *n, char *sn);
+ArvNoPtr BalancearArvore(ArvNoPtr treePtr);
+ArvNoPtr InserirNaArvore(ArvNoPtr treePtr, DataNode *data);
 
 //funcao para alocar espaco numa estrutura de no
 void inicializarTreeNO(ArvNoPtr *atual){
 	(*atual)=(struct ArvNo *)malloc(sizeof(struct ArvNo));
+}
+
+//funcao para criar um novo NO de Arvore (geralmente raiz)
+ArvNoPtr criarArvoreNo(){
+	ArvNoPtr criado;		//cria e aloca espaco numa estrutura ArvNoPtr
+	inicializarTreeNO(&criado);
+
+	criado->altura=1;
+	criado->esqPtr=NULL;
+	criado->dirPtr=NULL;
+	return (criado);		//retorna o NO criado
 }
 
 //funcao para pegar o maior valor entre dois inteiros
@@ -148,6 +161,67 @@ ArvNoPtr BuscaArvoreNome(ArvNoPtr treePtr, char *n, char *sn){
 	
 	// se no final só encontrou NULL, então não encontrou o elemento, retorna NULL
 	return NULL;
+}
+
+ArvNoPtr BalancearArvore(ArvNoPtr treePtr){
+	
+	int balanco=fatorBalanceamento(treePtr);
+	
+	if((balanco > 1) && (fatorBalanceamento(treePtr->esqPtr) >= 0)){//se esta desbalanceado para esq e seu filho esquerdo tambem
+		return rotacaoDir(treePtr);		//rotaciona para a direita
+	}
+	
+	if((balanco < -1) && (fatorBalanceamento(treePtr->dirPtr) <= 0)){//se esta desbalanceado para dir e seu filho direito tambem
+		return rotacaoEsq(treePtr);		//rotaciona para a esquerda
+	}
+	
+	if((balanco > 1) && (fatorBalanceamento(treePtr->esqPtr) < 0)){//se esta desbalanceado para esq e seu filho esquerdo pela dir
+		treePtr->esqPtr=rotacaoEsq(treePtr->esqPtr);		//rotaciona a esquerda para arrumar o NO
+		return rotacaoDir(treePtr);		//rotaciona a direita para enfim balancear
+	}
+	
+	if((balanco < -1) && (fatorBalanceamento(treePtr->dirPtr) > 0)){//se esta desbalanceado para dir e seu filho direito pela esq
+		treePtr->dirPtr=rotacaoDir(treePtr->dirPtr);		//rotaciona a direita para attumar o NO
+		return rotacaoEsq(treePtr);		//rotaciona a esquerda para enfim balancear
+	}
+	
+	//se nao houver nenhum desbalanceamento:
+	return treePtr;	
+}
+
+//funcao para inserir os elementos na arvore em ordem de matricula
+ArvNoPtr InserirNaArvore(ArvNoPtr treePtr, DataNode *data){
+	
+	//se os dados foram NULL, nao ha o que ser inserido, retorna a raiz normalmente
+	if(data==NULL){
+		printf("\nNao ha dados para inserir\n");
+		return treePtr;
+	}
+	
+	//se a raiz for nula, ele recebera os dados
+	if(treePtr==NULL){
+		treePtr=criarArvoreNo();
+		treePtr->dados=data;
+		return treePtr;
+	}
+	
+	//se a matricula ja existir, nao e inserido e retorna a raiz original
+	if((treePtr->dados)->matricula == data->matricula){
+		printf("\nMatricula repetida, cadastro nao inserido\n");	//se a matricula for repetida, nao e inserida
+		return treePtr;
+	}
+	
+	//se chegar aqui, a matricula deverá ir para a esquerda ou direita
+	if(data->matricula > (treePtr->dados)->matricula){
+		treePtr->dirPtr=InserirNaArvore(treePtr->dirPtr, data);	//dispara recursivamente para a direita
+	}else{
+		treePtr->esqPtr=InserirNaArvore(treePtr->esqPtr, data);	//dispara recursivamente para a esquerda
+	}
+	
+	treePtr->altura=1+maximo(pegarAltura(treePtr->esqPtr), pegarAltura(treePtr->dirPtr));	//atualiza a altura de um no da arvore
+	treePtr=BalancearArvore(treePtr);	//chama a funcao de balancear a arvore
+	
+	return treePtr;	//retorna a raiz
 }
 
 #endif
