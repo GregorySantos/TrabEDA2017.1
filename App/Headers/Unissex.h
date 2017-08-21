@@ -1,26 +1,26 @@
 #ifndef UNISSEX_INCLUDED
 #define UNISSEX_INCLUDED
 
-//Dependências
+//Dependencias
 #include "Time.h"
 #include "Data.h"
 #include "Tree.h"
 #include "List.h"
 
-void Delete(void *Tads[], int matricula, int type ); //Delta algum nó pela matricula
+void Delete(void *Tads[], int matricula, int type ); //Delta algum no pela matricula
 void * Create(int type, DataNode * startData); //Cria alguma estrutura de Dado e retorna o seu ponteiro
-int Insert(void * Tads[], DataNode * Data, int type ); //Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
-int Update(void *Tads[], int matricula, int type ); //Retorna 0 caso não tenha algum erro de atualização
+int Insert(void * Tads[], DataNode * Data, int type ); //Insere em Lista se Type == 1, caso contrario, espera inserir em AVL
+int Update(void *Tads[], int matricula, int type ); //Retorna 0 caso nao tenha algum erro de atualizacao
 void Select(void *Tads[], int type, int quant );//Visualiza os dados das TADS
 
-//Insere em Lista se Type == 1, caso contrário, espera inserir em AVL
+//Insere em Lista se Type == 1, caso contrario, espera inserir em AVL
 int Insert(void * Tads[], DataNode * Data, int type ) {
     void * novo;
     switch (type) {
         case 1:
             novo = createNodeList(Data);
             if ( !(InsertList( (List *) Tads[type], (NodeList *) novo) ) )       { //Comunica Erro
-                printf("\n=====Erro ao Inserir na Lista! Espaço Insuficiente ou Matrícula %d já Existente!=====\n", ((*(DataNode *) Data).matricula));
+                printf("\n=====Erro ao Inserir na Lista! Espaco Insuficiente ou Matricula %d ja Existente!=====\n", ((*(DataNode *) Data).matricula));
                 deleteNodeList((NodeList *) novo);
                 return 0;
             }
@@ -29,11 +29,11 @@ int Insert(void * Tads[], DataNode * Data, int type ) {
             if ( BuscaArvoreMatricula(Tads[type], Data->matricula) == NULL ){
                 Tads[type] = InserirNaArvore((ArvNoPtr) Tads[type], Data);
                 if ( Tads[type] == NULL ) {
-                    printf("\n=====Erro ao Inserir na Arvore! Espaço Insuficiente!=====\n");
+                    printf("\n=====Erro ao Inserir na Arvore! Espaco Insuficiente!=====\n");
                 }
                 return 1;
             } else {
-                printf("\n=====Erro ao Inserir na Arvore! Espaço Insuficiente ou Matrícula %d já Existente!=====\n", ((*(DataNode *) Data).matricula));
+                printf("\n=====Erro ao Inserir na Arvore! Espaco Insuficiente ou Matricula %d ja Existente!=====\n", ((*(DataNode *) Data).matricula));
                 FreeDataNode(Data);
                 return 0;
             }
@@ -53,27 +53,27 @@ void * Create(int type, DataNode * startData ) {
     return NULL;
 }
 
-//Deleta algum nó pela Matricula
+//Deleta algum no pela Matricula
 void Delete(void *Tads[], int matricula, int type ) {
     switch (type) {
         case 1:
             if ( !(removeNodeList( (List *) Tads[type], matricula)) )
-                printf("\n=====Erro ao Remover da Lista! Lista ou Matrícula %d não Existe!", matricula);
+                printf("\n=====Erro ao Remover da Lista! Lista ou Matricula %d nao Existe!", matricula);
             break;
         //case 0:
-            // Tads[0] = RemoveNodeTree( (RootTree *) Tads[type], Data) @Função para Remover da Arvore | Tratamento de Erro Interno
+            // Tads[0] = RemoveNodeTree( (RootTree *) Tads[type], Data) @Funcao para Remover da Arvore | Tratamento de Erro Interno
             // break;
     }
 }
 
-//Atualiza o nó fazendo uma busca interna, retorna 0 se a matrícula passada não existe
+//Atualiza o no fazendo uma busca interna, retorna 0 se a matricula passada nao existe
 int Update(void *Tads[], int matricula, int type ) {
 
     void * find;
     showMenu(3);
     int choose = validadeCommand(1, 5);
 
-    if (Tads[type] == NULL )//Se o Tad que será utilizado não existir, já retorna Erro
+    if (Tads[type] == NULL )//Se o Tad que sera utilizado nao existir, ja retorna Erro
         return 0;
 
     while ( choose != 5 ) {
@@ -85,7 +85,7 @@ int Update(void *Tads[], int matricula, int type ) {
                     showTime(TimePass(1));
                     return 0;
                 } else
-                    editDataNode(choose, ((NodeList *) find)->data); //Função para Editar o DataNode
+                    editDataNode(choose, ((NodeList *) find)->data); //Funcao para Editar o DataNode
                 break;
             case 2: //Edita da Arvore
                 find =  BuscaArvoreMatricula(Tads[type], matricula); //Verifica se realmente a matricula existe na Lista
@@ -93,7 +93,7 @@ int Update(void *Tads[], int matricula, int type ) {
                     showTime(TimePass(1));
                     return 0;
                 } else
-                    editDataNode(choose, ((ArvNoPtr) find)->dados); //Função para Editar o DataNode
+                    editDataNode(choose, ((ArvNoPtr) find)->dados); //Funcao para Editar o DataNode
         }
         showTime(TimePass(1));
         showMenu(3);
@@ -121,7 +121,7 @@ void Select(void *Tads[], int type, int quant ) {
                     if ( res != NULL ) {
                         showData(((NodeList *) res)->data);
                     } else {
-                        printf("Registro não encontrado!\n\n");
+                        printf("Registro nao encontrado!\n\n");
                     }
                     showTime(TimePass(1));
                     break;
@@ -137,7 +137,7 @@ void Select(void *Tads[], int type, int quant ) {
                     if ( res != NULL ) {
                         showData(((NodeList *) res)->data);
                     } else {
-                        printf("Registro não encontrado!\n\n");
+                        printf("Registro nao encontrado!\n\n");
                     }
                     showTime(TimePass(1));
                     break;
@@ -159,7 +159,7 @@ void Select(void *Tads[], int type, int quant ) {
                     if ( res != NULL ) {
                         showData(((ArvNoPtr) res)->dados);
                     } else {
-                        printf("Registro não encontrado!\n\n");
+                        printf("Registro nao encontrado!\n\n");
                     }
                     showTime(TimePass(1));
                     break;
@@ -175,7 +175,7 @@ void Select(void *Tads[], int type, int quant ) {
                     if ( res != NULL ) {
                         showData(((ArvNoPtr) res)->dados);
                     } else {
-                        printf("Registro não encontrado!\n\n");
+                        printf("Registro nao encontrado!\n\n");
                     }
                     showTime(TimePass(1));
                     break;

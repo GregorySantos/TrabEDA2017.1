@@ -38,6 +38,7 @@ int readFile(char output[], int choose, void * Tads[]) {
     FILE *ptrFile;
     char Data[SIZE];
     int Quant = 0; //Quantidade de Dados Inseridos com Sucesso
+    static int Max = 0;
 
     if ( ( ptrFile = fopen(output, "r") ) == NULL ) {
         printf("Erro ao Ler o Arquivo!\n");
@@ -45,8 +46,9 @@ int readFile(char output[], int choose, void * Tads[]) {
     } else {
         TimePass(0); //Começa a Cronometrar
         fgets(Data, SIZE, ptrFile);//Pula a primeira Linha
+        Max = atoi(Data);
         fgets(Data, SIZE, ptrFile);//Pula a segunda Linha
-        while ( !feof(ptrFile) ) {
+        while ( !feof(ptrFile) && Max-- ) {
             fgets(Data, SIZE, ptrFile);
             switch (choose) {
                 case 1:
