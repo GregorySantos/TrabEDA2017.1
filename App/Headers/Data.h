@@ -156,10 +156,13 @@ void giveData(void * Tads[]) {//Vai setar um Nó em alguma Estrutura Individualm
         case 2:
             Uno = setDataNode();
             TimePass(0); //Começa a Cronometrar
-            //if ( Tads[0] == NULL ) //Se a arvore não existe cria uma Raiz e Insere os Dados
-                //Tads[0] = Create(0, Uno);
-            //else
-                //Insert(Tads, Uno, 0); //Insere na Arvore
+            if ( Tads[0] == NULL ) { //Se a arvore não existe cria uma Raiz e Insere os Dados
+                Tads[0] = Create(0, Uno);
+                if ( Tads[0] == NULL ) {
+                    printf("Espaço Insuficiente\n");
+                }
+            } else
+                Insert(Tads, Uno, 0); //Insere na Arvore
             showTime(TimePass(1));
             break;
     }

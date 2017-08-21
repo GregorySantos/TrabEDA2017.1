@@ -25,9 +25,19 @@ int Insert(void * Tads[], DataNode * Data, int type ) {
                 return 0;
             }
             return 1;
-        //case 0:
-            // Tads[0] = InsertTree( (RootTree *) Tads[type], Data) @Função para Inserir na Arvore | Tratamento de Erro Interno
-            // break;
+        case 0:
+            if ( BuscaArvoreMatricula(Tads[type], Data->matricula) == NULL ){
+                Tads[type] = InserirNaArvore((ArvNoPtr) Tads[type], Data);
+                if ( Tads[type] == NULL ) {
+                    printf("\n=====Erro ao Inserir na Arvore! Espaço Insuficiente!=====\n");
+                }
+                return 1;
+            } else {
+                printf("\n=====Erro ao Inserir na Arvore! Espaço Insuficiente ou Matrícula %d já Existente!=====\n", ((*(DataNode *) Data).matricula));
+                FreeDataNode(Data);
+                return 0;
+            }
+            break;
     }
     return 0;
 }
@@ -37,8 +47,8 @@ void * Create(int type, DataNode * startData ) {
     switch (type) {
         case 1:
             return createList();
-        //case 2:
-            //return InsertTree( NULL, Data) @Função para Inserir na Arvore
+        case 0:
+            return InserirNaArvore(NULL, startData);
     }
     return NULL;
 }
