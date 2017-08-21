@@ -60,9 +60,13 @@ void Delete(void *Tads[], int matricula, int type ) {
             if ( !(removeNodeList( (List *) Tads[type], matricula)) )
                 printf("\n=====Erro ao Remover da Lista! Lista ou Matricula %d nao Existe!", matricula);
             break;
-        //case 0:
-            // Tads[0] = RemoveNodeTree( (RootTree *) Tads[type], Data) @Funcao para Remover da Arvore | Tratamento de Erro Interno
-            // break;
+        case 0:
+            if ( BuscaArvoreMatricula(Tads[type], matricula) != NULL ) {
+                Tads[type] = DelecaoArvore( (ArvNoPtr) Tads[type], matricula);
+            } else {
+                printf("Registro nao encontrado!\n");
+            }
+            break;
     }
 }
 
