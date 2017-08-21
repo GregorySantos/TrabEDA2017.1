@@ -56,13 +56,16 @@ int readFile(char output[], int choose, void * Tads[]) {
                         Quant++;
                     break;
                 case 2:
-                    //if ( Tads[0] == NULL ){ //Se a arvore não existe cria uma Raiz e Insere os Dados
-                        //Tads[0] = Create(0, breakLine(data));
-                        //Quant++;
-                    //}else{
-                        //Insert(Tads, breakLine(Data), 0); //Insere na Arvore
-                        //Quant++;
-                    //}
+                    if ( Tads[0] == NULL ) { //Se a arvore não existe cria uma Raiz e Insere os Dados
+                        Tads[0] = Create(0, breakLine(Data));
+                        if ( Tads[0] != NULL )
+                            Quant++;
+                        else
+                            printf("Espaço Insuficiente!\n");
+                    } else {
+                        Insert(Tads, breakLine(Data), 0); //Insere na Arvore
+                        Quant++;
+                    }
                     break;
             }
         }
