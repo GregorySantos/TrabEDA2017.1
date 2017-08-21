@@ -27,7 +27,6 @@ ArvNoPtr BalancearArvore(ArvNoPtr treePtr);
 ArvNoPtr InserirNaArvore(ArvNoPtr treePtr, DataNode *data);
 ArvNoPtr menor_dosMaiores(ArvNoPtr treePtr);
 ArvNoPtr DelecaoArvore(ArvNoPtr treePtr, int matricula);
-ArvNoPtr CopyNodeTree(ArvNoPtr treePtr, ArvNoPtr aux);
 
 //funcao para alocar espaco numa estrutura de no
 void inicializarTreeNO(ArvNoPtr *atual){
@@ -119,7 +118,7 @@ ArvNoPtr BuscaArvoreMatricula(ArvNoPtr treePtr, int matricula){
 
 //funcao para imprimir toda a arvore por ordem da matricula
 void ImpressaoArvoreOrdem(ArvNoPtr treePtr){
-    if(treePtr != NULL){ //se a arvore nao estiver vazia, ent�o percorra
+    if(treePtr != NULL){ //se a arvore nao estiver vazia, entao percorra
         ImpressaoArvoreOrdem(treePtr->esqPtr);
 
 		showData(treePtr->dados);
@@ -148,7 +147,7 @@ ArvNoPtr BuscaArvoreNome(ArvNoPtr treePtr, char *n, char *sn){
 	ArvNoPtr aux;
 	aux=BuscaArvoreNome(treePtr->esqPtr, n, sn); //testa toda a esquerda
 
-	if(aux!=NULL){ //se nao retornou NULL, � porque � o elemento desejado
+	if(aux!=NULL){ //se nao retornou NULL, e porque esse e o elemento desejado
 		return aux;
 	}
 
@@ -158,11 +157,11 @@ ArvNoPtr BuscaArvoreNome(ArvNoPtr treePtr, char *n, char *sn){
 	}
 
 	aux=BuscaArvoreNome(treePtr->dirPtr, n, sn);//testa agora a direita
-	if(aux!=NULL){ //se nao retornou NULL, � porque � o elemento desejado
+	if(aux!=NULL){ //se nao retornou NULL, e porque esse e o elemento desejado
 		return aux;
 	}
 
-	// se no final s� encontrou NULL, ent�o n�o encontrou o elemento, retorna NULL
+	// se no final esse encontrou NULL, entao nao encontrou o elemento, retorna NULL
 	return NULL;
 }
 
@@ -234,16 +233,6 @@ ArvNoPtr menor_dosMaiores(ArvNoPtr treePtr){
 	return treePtr;
 }
 
-ArvNoPtr CopyNodeTree(ArvNoPtr treePtr, ArvNoPtr aux){
-	treePtr->dados->matricula=aux->dados->matricula;
-	strcpy(treePtr->dados->nome, aux->dados->nome);
-	strcpy(treePtr->dados->sobrenome, aux->dados->sobrenome);
-	strcpy(treePtr->dados->email, aux->dados->email);
-	strcpy(treePtr->dados->telefone, aux->dados->telefone);
-	treePtr->dados->salario=aux->dados->salario;
-	return treePtr;
-}
-
 //funcao de delecoa de arvore
 ArvNoPtr DelecaoArvore(ArvNoPtr treePtr, int matricula){
     if(BuscaArvoreMatricula(treePtr, matricula)!=NULL){
@@ -269,7 +258,8 @@ ArvNoPtr DelecaoArvore(ArvNoPtr treePtr, int matricula){
 
             }else{
             	ArvNoPtr maiorno=menor_dosMaiores(treePtr->dirPtr);
-            	treePtr=CopyNodeTree(treePtr, maiorno);
+            	FreeDataNode(treePtr->dados);
+            	treePtr->dados=copyData(maiorno->dados);
             	treePtr->dirPtr=DelecaoArvore(treePtr->dirPtr, (maiorno->dados)->matricula);
             	return treePtr;
             }
