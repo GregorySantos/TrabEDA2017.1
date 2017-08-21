@@ -18,6 +18,6 @@ double TimePass(int op) {
 }
 
 void showTime(double numberInput) {
-    printf("\n\n***********Essa operação levou: %f segundos**********\n\n", numberInput);
+    printf("\n\n***********Essa operacao levou: %f segundos**********\n\n", numberInput);
 }
 #endif
