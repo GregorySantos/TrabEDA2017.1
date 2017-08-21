@@ -55,7 +55,7 @@ int validadeCommand(int start, int end) {
     getchar();
 
     while ( res < start || res > end ) {
-        printf("Comando não identificado! Por favor, digite novamente: ");
+        printf("Comando nao identificado! Por favor, digite novamente: ");
         scanf("%d", &res);
         getchar();
     }
