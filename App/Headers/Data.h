@@ -159,7 +159,7 @@ void giveData(void * Tads[]) {//Vai setar um Nó em alguma Estrutura Individualm
             if ( Tads[0] == NULL ) { //Se a arvore não existe cria uma Raiz e Insere os Dados
                 Tads[0] = Create(0, Uno);
                 if ( Tads[0] == NULL ) {
-                    printf("Espaço Insuficiente\n");
+                    printf("Espaco Insuficiente\n");
                 }
             } else
                 Insert(Tads, Uno, 0); //Insere na Arvore
