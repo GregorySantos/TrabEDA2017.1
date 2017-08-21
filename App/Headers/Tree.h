@@ -167,11 +167,11 @@ ArvNoPtr BalancearArvore(ArvNoPtr treePtr){
 	
 	int balanco=fatorBalanceamento(treePtr);
 	
-	if((balanco > 1) && (fatorBalanceamento(treePtr->esqPtr) >= 0){//se esta desbalanceado para esq e seu filho esquerdo tambem
+	if((balanco > 1) && (fatorBalanceamento(treePtr->esqPtr) >= 0)){//se esta desbalanceado para esq e seu filho esquerdo tambem
 		return rotacaoDir(treePtr);		//rotaciona para a direita
 	}
 	
-	if((balanco < -1) && (fatorBalanceamento(treePtr->dirPtr) <= 0){//se esta desbalanceado para dir e seu filho direito tambem
+	if((balanco < -1) && (fatorBalanceamento(treePtr->dirPtr) <= 0)){//se esta desbalanceado para dir e seu filho direito tambem
 		return rotacaoEsq(treePtr);		//rotaciona para a esquerda
 	}
 	
