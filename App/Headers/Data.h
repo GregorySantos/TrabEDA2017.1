@@ -19,6 +19,9 @@ char * createString(int sizeMax); //Helper para Criação de Strings
 void giveData(void * Tads[]); //Função que será chamada para colocar um novo Node em alguma Tad
 void editDataNode(int choose, DataNode *D); //Função para Editar o DataNode
 void showData(DataNode * data);//Exibe o DataNode
+DataNode * copyData(DataNode * dest);//Retorna a cópia do DataNode que entrou
+char * PreCreateString( char * input );//Retorna a cópia da string passada
+DataNode * PresetDataNode(DataNode *preSet);//Cria um DataNode com um já PreSetado
 
 //Dependências
 #include <stdio.h>
@@ -60,6 +63,11 @@ void setFileData( char * input, DataNode * new, int data ) {
             (*new).salario = atof(input);
             break;
     }
+}
+
+//Copia um DataNode para Outro
+DataNode * copyData(DataNode * dest){
+    return PresetDataNode(dest);
 }
 
 //Cria uma Estrutura Data
@@ -128,12 +136,32 @@ DataNode * setDataNode() {
     return new;
 }
 
+//Set Datanode com um ja PreSetado
+DataNode * PresetDataNode(DataNode *preSet) {
+    DataNode * new = createData();
+    (*new).matricula = (*preSet).matricula;
+    (*new).nome = PreCreateString((*preSet).nome);
+    (*new).sobrenome = PreCreateString((*preSet).sobrenome);
+    (*new).email = PreCreateString((*preSet).email);
+    (*new).telefone = PreCreateString((*preSet).email);
+    (*new).salario = (*preSet).salario;
+
+    return new;
+}
+
 //Cria uma String no Tamanho máximo de sizeMax.
 char * createString(int sizeMax) {
     char *string = malloc(sizeof(char) * (sizeMax + 1));
     fgets(string, 60, stdin);
     strtok(string, "\n");
     string = (char *) realloc(string, strlen(string) * sizeof(char) + 1);
+    return string;
+}
+
+//Retorna a copia da string que entrou
+char * PreCreateString( char * input ) {
+    char *string = malloc(sizeof(char) * strlen(input) + 1);
+    strncpy(string, input, strlen(input) + 1);
     return string;
 }
 
